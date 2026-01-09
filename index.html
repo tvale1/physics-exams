@@ -1,0 +1,5163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root{
+    --baseColor: #525D85;
+    --baseColor2: #F44971;
+    --fontColor1: white;
+    --font1: 'Days One', sans-serif;
+    --font2: 'DM Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* ───────── Builder Controls (Top Bar) ───────── */
+
+.builder-controls-container{
+    font-family: var(--font2);
+    font-weight: 700;
+    font-size: 20px;
+    display:flex;
+    padding-right:2%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    justify-content: flex-end;
+}
+
+.marksWrap{
+    margin-right: 10px;
+}
+
+.marksTitle{
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 2px;
+}
+
+.marksRowWrap{
+    display: flex;
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+.marksRow{
+    margin-left: 5px;
+}
+
+/* ───────── Options Accordion ───────── */
+
+.optionsAccordionWrap{
+    position: relative;
+}
+
+.builder-control1{
+    display:flex;
+    padding: 5px 0;
+    background-color: var(--baseColor);
+    color: white;
+    cursor: pointer;
+    position: relative;
+    width:150px;
+    margin-right: 10px;
+}
+
+.optionText{
+    margin-left:37px;
+}
+
+.optionsIcon{
+    position:absolute;
+    right: 5px;
+    transition: transform 0.4s ease-out;
+    text-align:center;
+}
+
+.rotateIcon{
+    transform: rotate(180deg);
+}
+
+.optionsAccodionBody{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    font-size: 12px;
+    position:absolute;
+    z-index: 100;
+    background-color: var(--baseColor);
+    width:150px;
+    color:white;
+}
+
+.filterHeading{
+    border-bottom: 1px dashed #000;
+    text-align: center;
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+.optionsCheckWrap{
+    display:flex;
+    position:relative;
+}
+
+.optionsAccodionBodyText{
+    margin-left:10px;
+    padding: 10px 0;
+}
+
+.iconCheckbox{
+    font-size: 8px;
+    align-self: center;
+    position:absolute;
+    right:3px;
+}
+
+/* ───────── Buttons ───────── */
+
+.createExamBtn{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding:5px;
+    background-color: var(--baseColor);
+    color:white;
+    display:flex;
+}
+
+.createExamBtn:hover{
+    cursor:pointer;
+}
+
+.createExamBtn:active{
+    background-image: linear-gradient(to bottom right, white, var(--baseColor));
+}
+
+.fa-file-download{
+    padding-left:10px;
+}
+
+/* ───────── Builder Layout ───────── */
+
+.builder-headings-container{
+    display:flex;
+    padding:5px;
+    border-bottom: 1px solid #000;
+    justify-content: space-evenly;
+    background-color: var(--baseColor);
+    font-family: var(--font2);
+    font-weight: 700;
+    font-size: 18px;
+    color:white;
+}
+
+.heading{
+    flex: 1;
+    padding:5px;
+    text-align: center;
+}
+
+.heading4{
+    flex: 3;
+    padding:5px;
+    text-align: center;
+}
+
+.builder_page{
+    display:flex;
+    justify-content: space-evenly;
+    min-height: 300px;
+}
+
+/* ───────── Sidebars ───────── */
+
+.builder_sidebar1{
+    flex: 1;
+    background-color: var(--baseColor);
+    font-family: var(--font2);
+    font-weight: 400;
+    font-size: 14px;
+    color:white;
+}
+
+.builder_sidebar2{
+    flex: 1;
+    padding:5px;
+}
+
+.builder_sidebar3{
+    flex: 1;
+    padding:5px;
+}
+
+.builder_sidebar4{
+    flex: 3;
+    padding:5px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* ───────── Accordion ───────── */
+
+.accordion-header-wrap{
+    display:flex;
+    border-bottom: 1px solid #000;
+    position: relative;
+    justify-content: center;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+.accordion-expand-icon{
+    position: absolute;
+    top: 0;
+    right:5px;
+    font-size: 20px;
+}
+
+.accordion_body{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.concept_list{
+    padding: 5px 0;
+}
+
+.list-item{
+    border:1px solid #000;
+    text-align: center;
+    background-color: var(--baseColor);
+    font-family: var(--font2);
+    font-size: 13px;
+    color:white;
+    margin: 3px 5px;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+/* ───────── Drag States ───────── */
+
+.draggable,
+.dragging{
+    opacity: 0.5;
+}
+
+/* ───────── Question Types ───────── */
+
+.MC{
+    background-color: var(--baseColor);
+}
+
+.ER{
+    background-color:white;
+    color: var(--baseColor);
+}
+
+.general-maths-styles{
+    background-color: #620050;
+}
+
+/* ───────── Utility Borders ───────── */
+
+.addBorders,
+.fullBorders{
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+    </style>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/docx@8.2.2/build/index.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script defer>
+        
+
+//Get data onload
+async function getData() {
+    try {
+        const response = await fetch('questions.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("error collecting data, try refreshing", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    
+    //loading Spinner
+    let page = document.querySelector(".builder_page"); 
+    let pageHTML = page.innerHTML;
+    let loadingDiv = `<div class="loading-container" style="display: flex; justify-content:center; width:100%; height:100%; background:rgba(72, 71, 74, 0.8); position: absolute; visiblity: visible; opacity:1; transition: opacity 0.7s, visibility 0.7s";>
+        <div class="loading-spinner" style="margin-top:100px; width: 100px; height:100px; border-radius:50%; border-left: 5px solid black; border-top: 5px solid black; animation: rotation 2s infinite linear;"></div>
+    </div>`;
+    page.innerHTML = pageHTML + loadingDiv;
+
+    let MCCheckBox = true;
+    let ERCheckBox = true;
+    let previewToggle = false;
+    
+    const data = getData().then((data)=>{
+        //Remove Loading Spinner
+        let loading = document.querySelector(".loading-container");
+        loading.style.opacity = "0";
+        loading.style.visibility = "hidden";
+
+       
+
+        //Add event listners for accordian click
+        const accordion = document.querySelectorAll(".accordion-header-wrap");
+        for (var i = 0; i < accordion.length; i++) {
+            accordion[i].addEventListener('click', openAndCloseAccordion);
+        }
+
+        function openAndCloseAccordion(e){
+
+            let plusSymbol = e.currentTarget.lastElementChild.innerHTML;
+            
+            if(plusSymbol =='+'){
+                const maxHeight = e.currentTarget.nextElementSibling.scrollHeight;
+                e.currentTarget.nextElementSibling.style.cssText += 'max-height:'+maxHeight+'px;';
+                plusSymbol = '-';
+                e.currentTarget.lastElementChild.innerHTML=plusSymbol;
+            }
+            else{
+                e.currentTarget.nextElementSibling.style.cssText += 'max-height:0px;';
+                plusSymbol = '+';
+                e.currentTarget.lastElementChild.innerHTML=plusSymbol; 
+            }
+        }
+        
+        //Search database for questions in topic - Add Event Listeners for clicks.
+        const concept_list_array = document.querySelectorAll(".concept_list");
+        for (var i = 0; i < concept_list_array.length; i++) {
+            concept_list_array[i].addEventListener('click', questionsByTopic);
+        }
+        function questionsByTopic(e){
+            // Get the items in sidebar3 as array. 
+            let sidebar3 = document.querySelectorAll(".builder_sidebar3 .list-item");
+            let itemID = [];
+            for (let n=0; n<sidebar3.length; n++){
+                let item = sidebar3[n].innerHTML.split(" ");
+                itemID.push(item[0]);
+            }
+     
+            //Check if Extended Response and/or MC checkboxes are checked 
+            let MCChecked = "MC";
+            let ERChecked = "ER";
+            if (MCCheckBox == false){
+                MCChecked = "false";
+            }
+            if (ERCheckBox == false){
+                ERChecked = "false";
+            }
+
+            //Add list-items to sidebar (questions for that topic) (Only include items not in sidebar 3 - that is in the itemID array)
+            let sidebar2 = document.querySelector(".builder_sidebar2");         
+            sidebar2.innerHTML = data.filter((item) => {
+                return e.currentTarget.innerHTML == item.topic && !itemID.includes(item.id) && (item.style == MCChecked || item.style == ERChecked)
+            })
+            .map(item => '<div class="list-item '+item.style+'" draggable = "true">'+item.id +' ' + item.topic +'</div>').join('');
+
+            dragster();
+
+            //Add click event listeners to list-items, to preview the question when clicked. 
+            const listItemArray = document.querySelectorAll(".list-item");
+            for (let p=0; p<listItemArray.length; p++){
+                listItemArray[p].addEventListener("click", previewWhenClicked);
+            }
+        }
+        function dragster(){
+        // Add event listeners for dragging and droping
+            let draggedItem= null;
+            let selectedQuestions = null;
+            const listItems = document.querySelectorAll(".list-item");
+            for (var i = 0; i < listItems.length; i++) {
+                const item = listItems[i];
+                listItems[i].addEventListener('dragstart', ()=>{
+                    draggedItem = item;
+                    draggedItem.classList.add('dragging');
+                });
+
+                listItems[i].addEventListener('dragend', function () {
+                    draggedItem.classList.remove('dragging');
+                                
+                    setTimeout(function () {
+                        draggedItem.style.display = 'block';
+                        draggedItem = null;
+        
+                    }, 0);
+
+                    selectedQuestions=document.querySelectorAll(".builder_sidebar3 .list-item");
+                    PreviewExam(selectedQuestions,data)
+                });
+            }
+            
+                       
+            let lists = document.querySelectorAll('.list');
+            for (let j = 0; j < lists.length; j ++) {
+                const list = lists[j];
+        
+                list.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    const afterElement = getDragAfterElement(list, e.clientY);
+                    const draggable = document.querySelector('.dragging');
+                    if (afterElement == null) {
+                        list.appendChild(draggable);
+                    } else {
+                        list.insertBefore(draggable, afterElement);
+                    }
+                });
+            }
+            
+                
+            
+        }
+        //Display preview single question when clicked
+        function previewWhenClicked(e){
+            
+            if (previewToggle == false){
+                //Get ID of clicked question.
+                let id = e.target.innerHTML.split(" ")[0];
+                let currentText = e.target.innerHTML;
+                
+                const question = data.filter((q)=>{
+                    return q.id == id
+                });
+                
+                let questionString = "";
+                
+                
+                if (question[0].style=="MC"){
+                    questionString = makeMCString(question)
+                    
+                }
+                else {
+                    questionString = makeERString(question)
+                }
+                
+            
+                questionString = questionString.replace("Question 1","Question ID: " + id);
+                e.target.style.position = "relative";
+
+
+                //make the preview box and put question string in there
+                let previewDiv = `
+                
+                <div class="preview-modal" style=" width: 200%; min-height: 100px; position: absolute; right:-200%; top: -10px; background: white; border: 1px solid black; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); z-index: 1;">
+                    <div style="position: relative; width:100%; background: white; min-height:10px;">
+                        <div style="position: absolute; left:-11px; top:10px; transform: rotate(45deg); width: 20px; height: 20px; background: white; border-left: 1px solid black; border-bottom: 0.5px solid black; " ></div>
+                    </div>
+                    
+                    <div style=" width: 95%; margin-right:10px; margin-left: auto; margin-bottom: 10px; min-height: 100px; background: white; color:black; font-size: 10px; text-align: left; z-index: 100;">
+                        ${questionString}
+                    </div>
+                </div>
+                
+                
+                `;
+
+                e.target.innerHTML = currentText + previewDiv;
+                const listItemArray = document.querySelector(".builder_sidebar2");
+                const elements = listItemArray.getElementsByClassName("lines");
+                while(elements.length > 0){
+                    elements[0].parentNode.removeChild(elements[0]);
+                }
+                const answerBoxes = listItemArray.getElementsByClassName("answerBox");
+                while(answerBoxes.length > 0){
+                    answerBoxes[0].parentNode.removeChild(answerBoxes[0]);
+                }
+
+               
+
+                previewToggle = true;
+                MathJax.typeset();
+            }
+
+            else {
+                const elements = document.getElementsByClassName("preview-modal");
+                while(elements.length > 0){
+                    elements[0].parentNode.removeChild(elements[0]);
+                }
+                previewToggle = false;
+            }   
+        }
+       
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.list-item:not(.dragging)')];
+          
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child }
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+    });
+    
+    //When Exam Button is clicked.
+    const createExamBtn = document.querySelector('.createExamBtn');
+    createExamBtn.addEventListener("click", ()=>{
+        console.log("Create Exam Clicked");
+        let myDiv = document.getElementsByClassName("builder_sidebar3");
+		let div2Children = myDiv[0].querySelectorAll(".list-item")
+        let qIDArray = [];
+
+        for (let p = 0; p < div2Children.length; p++) {
+			let str = div2Children[p].textContent;
+			const qId = str.split(" ", 1)[0];
+            qIDArray.push(qId);
+             
+		}
+        
+        generateWordDoc(qIDArray);
+
+    });
+
+}); 
+
+
+
+    
+    const { 
+        Document, 
+        Packer, 
+        Paragraph, 
+        LineRuleType, 
+        TabStopPosition, 
+        TabStopType, 
+        PageBreak, 
+        Header, 
+        PageNumber, 
+        ImageRun, 
+        Table, 
+        TableCell, 
+        TableRow, 
+        VerticalAlignTable, 
+        BorderStyle, 
+        WidthType,
+        TableLayoutType, 
+        convertInchesToTwip, 
+        VerticalAlign, 
+        MathRun,
+        MathSum,
+        MathSubScript,
+        MathSuperScript,
+        MathRadical,
+
+    } = docx;
+    const docxMath = docx.Math;
+    const DEFAULT_FONT = "Arial";
+    const DEFAULT_SIZE = 22; // 11pt
+
+    //let totalPages = 3;
+
+    //Safe Maths Evaluator
+
+function insertImplicitMultiplication(tokens) {
+  const result = [];
+
+  function isLeft(t) {
+    return (
+      t.type === "number" ||
+      t.type === "identifier" ||
+      (t.type === "paren" && t.value === ")")
+    );
+  }
+
+  function isRight(t) {
+    return (
+      t.type === "number" ||
+      t.type === "identifier" ||
+      (t.type === "paren" && t.value === "(")
+    );
+  }
+
+  function isFunctionCall(left, right) {
+    return (
+      left.type === "identifier" &&
+      right.type === "paren" &&
+      right.value === "("
+    );
+  }
+
+  for (let i = 0; i < tokens.length; i++) {
+    const curr = tokens[i];
+    const next = tokens[i + 1];
+
+    result.push(curr);
+
+    if (!next) continue;
+
+    if (
+      isLeft(curr) &&
+      isRight(next) &&
+      !isFunctionCall(curr, next)
+    ) {
+      result.push({ type: "operator", value: "*" });
+    }
+  }
+
+  return result;
+}
+
+
+function tokenize(input) {
+  const tokens = [];
+  let i = 0;
+
+  while (i < input.length) {
+    const char = input[i];
+
+    // Ignore whitespace
+    if (char === " ") {
+      i++;
+      continue;
+    }
+
+    // Number (integer or decimal)
+    if (/\d|\./.test(char)) {
+      let num = "";
+      while (/\d|\./.test(input[i])) {
+        num += input[i++];
+      }
+      tokens.push({ type: "number", value: Number(num) });
+      continue;
+    }
+
+    // Operators
+    if ("+-*/^".includes(char)) {
+        tokens.push({ type: "operator", value: char });
+        i++;
+        continue;
+    }
+
+
+    // Parentheses
+    if (char === "(" || char === ")") {
+      tokens.push({ type: "paren", value: char });
+      i++;
+      continue;
+    }
+
+    // Comma
+    if (char === ",") {
+      tokens.push({ type: "comma", value: char });
+      i++;
+      continue;
+    }
+
+    // Identifier (pi, e, future constants)
+    // Identifier (pi, e)
+    if (/[a-zA-Z]/.test(input[i])) {
+        let name = "";
+        while (i < input.length && /[a-zA-Z]/.test(input[i])) {
+            name += input[i++];
+        }
+        tokens.push({ type: "identifier", value: name });
+        continue;
+    }
+
+
+    // Anything else = invalid
+    throw new Error(`Invalid character: ${char}`);
+  }
+
+  return tokens;
+}
+
+function parse(tokens) {
+  let current = 0;
+
+  function peek() {
+    return tokens[current];
+  }
+
+  function consume() {
+    return tokens[current++];
+  }
+
+  function expect(type, value) {
+    const token = consume();
+    if (!token || token.type !== type || (value && token.value !== value)) {
+      throw new Error(`Unexpected token: ${JSON.stringify(token)}`);
+    }
+    return token;
+  }
+
+  // expression → term (("+" | "-") term)*
+  function parseExpression() {
+    let node = parseTerm();
+
+    while (
+      peek() &&
+      peek().type === "operator" &&
+      (peek().value === "+" || peek().value === "-")
+    ) {
+      const operator = consume().value;
+      const right = parseTerm();
+
+      node = {
+        type: "BinaryExpression",
+        operator,
+        left: node,
+        right
+      };
+    }
+
+    return node;
+  }
+
+  // term → unary (("*" | "/") unary)*
+  function parseTerm() {
+    let node = parseUnary();
+
+    while (
+      peek() &&
+      peek().type === "operator" &&
+      (peek().value === "*" || peek().value === "/")
+    ) {
+      const operator = consume().value;
+      const right = parseUnary();
+
+      node = {
+        type: "BinaryExpression",
+        operator,
+        left: node,
+        right
+      };
+    }
+
+    return node;
+  }
+
+  // unary → "-" unary | power
+  function parseUnary() {
+    if (
+      peek() &&
+      peek().type === "operator" &&
+      peek().value === "-"
+    ) {
+      consume();
+      return {
+        type: "UnaryExpression",
+        operator: "-",
+        argument: parseUnary()
+      };
+    }
+
+    return parsePower();
+  }
+
+  // power → factor ("^" power)?
+function parsePower() {
+  let node = parseCall();
+
+  if (
+    peek() &&
+    peek().type === "operator" &&
+    peek().value === "^"
+  ) {
+    consume();
+    return {
+      type: "BinaryExpression",
+      operator: "^",
+      left: node,
+      right: parsePower()
+    };
+  }
+
+  return node;
+}
+
+
+  // factor → NUMBER | "(" expression ")"
+function parseCall() {
+  let node = parsePrimary();
+
+  if (
+    peek() &&
+    peek().type === "paren" &&
+    peek().value === "("
+  ) {
+    if (node.type !== "Identifier") {
+      throw new Error("Only identifiers can be called as functions");
+    }
+
+    consume(); // "("
+    const argument = parseExpression();
+    expect("paren", ")");
+
+    return {
+      type: "CallExpression",
+      callee: node.name,
+      argument
+    };
+  }
+
+  return node;
+}
+
+function parsePrimary() {
+  const token = peek();
+
+  if (!token) {
+    throw new Error("Unexpected end of input");
+  }
+
+  if (token.type === "number") {
+    consume();
+    return { type: "Literal", value: token.value };
+  }
+
+  if (token.type === "identifier") {
+    consume();
+    return { type: "Identifier", name: token.value };
+  }
+
+  if (token.type === "paren" && token.value === "(") {
+    consume();
+    const expr = parseExpression();
+    expect("paren", ")");
+    return expr;
+  }
+
+  throw new Error(`Unexpected token: ${JSON.stringify(token)}`);
+}
+
+
+  const ast = parseExpression();
+
+  if (current < tokens.length) {
+    throw new Error(`Unexpected token at end: ${JSON.stringify(peek())}`);
+  }
+
+  return ast;
+}
+
+const CONSTANTS = Object.freeze({
+  pi: Math.PI,
+  e: Math.E
+});
+
+const FUNCTIONS = Object.freeze({
+  // Trig
+  sin:   x => Math.sin(x),
+  cos:   x => Math.cos(x),
+  tan:   x => Math.tan(x),
+
+  // Inverse trig
+  asin:  x => Math.asin(x),
+  acos:  x => Math.acos(x),
+  atan:  x => Math.atan(x),
+
+  // Roots
+  sqrt:  x => {
+    if (x < 0) throw new Error("sqrt of negative number");
+    return Math.sqrt(x);
+  },
+
+  // Logarithms
+  ln: x => {
+    if (x <= 0) throw new Error("ln undefined for x ≤ 0");
+    return Math.log(x);
+  },
+
+  log: x => {
+    if (x <= 0) throw new Error("log undefined for x ≤ 0");
+    return Math.log10(x);
+  }
+});
+
+
+
+
+function evaluate(node) {
+  switch (node.type) {
+    case "Literal":
+      return node.value;
+
+    case "Identifier":
+      if (node.name in CONSTANTS) {
+        return CONSTANTS[node.name];
+      }
+      throw new Error(`Unknown identifier: ${node.name}`);
+
+    case "UnaryExpression":
+      return -evaluate(node.argument);
+
+    case "BinaryExpression": {
+      const l = evaluate(node.left);
+      const r = evaluate(node.right);
+
+      switch (node.operator) {
+        case "+": return l + r;
+        case "-": return l - r;
+        case "*": return l * r;
+        case "/":
+          if (r === 0) throw new Error("Division by zero");
+          return l / r;
+        case "^": return Math.pow(l, r);
+      }
+    }
+
+    case "CallExpression": {
+      const fn = FUNCTIONS[node.callee];
+      if (!fn) {
+        throw new Error(`Unknown function: ${node.callee}`);
+      }
+
+      const value = evaluate(node.argument);
+      return fn(value);
+    }
+
+    default:
+      throw new Error(`Unknown AST node type: ${node.type}`);
+  }
+}
+
+
+
+
+//Object Preprocessor
+const preprocessRules = [
+  {
+    // pi() → pi
+    pattern: /\bpi\s*\(\s*\)/g,
+    replace: "pi"
+  },
+  {
+    // pow(a,b) → (a)^(b)
+    pattern: /\bpow\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/g,
+    replace: "($1)^($2)"
+  }
+];
+
+
+function preprocessString(str, rules) {
+  let result = str;
+
+  for (const { pattern, replace } of rules) {
+    result = result.replace(pattern, replace);
+  }
+
+  return result;
+}
+function preprocessDeep(data, rules) {
+  if (typeof data === "string") {
+    return preprocessString(data, rules);
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => preprocessDeep(item, rules));
+  }
+
+  if (data !== null && typeof data === "object") {
+    const result = {};
+    for (const [key, value] of Object.entries(data)) {
+      result[key] = preprocessDeep(value, rules);
+    }
+    return result;
+  }
+
+  return data;
+}
+
+function preprocessQuestion(question) {
+  return preprocessDeep(question, preprocessRules);
+}
+
+//End of preprocessor
+
+
+
+// Object Parser string replacer (replace variables - working)
+function buildVariableMap(variables) {
+  if (!Array.isArray(variables) || variables.length === 0) {
+    return {};
+  }
+
+  return variables.reduce((map, v) => {
+    map[v.variable] = v.stNum;
+    return map;
+  }, {});
+}
+
+function replaceVariablesInString(str, varMap) {
+  if (typeof str !== "string") return str;
+
+  let result = str;
+  for (const [variable, value] of Object.entries(varMap)) {
+    const regex = new RegExp(
+      variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      "g"
+    );
+    result = result.replace(regex, value);
+  }
+  return result;
+}
+
+function replaceVariablesDeep(data, varMap) {
+  if (typeof data === "string") {
+    return replaceVariablesInString(data, varMap);
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => replaceVariablesDeep(item, varMap));
+  }
+
+  if (data !== null && typeof data === "object") {
+    const result = {};
+    for (const [key, value] of Object.entries(data)) {
+      result[key] = replaceVariablesDeep(value, varMap);
+    }
+    return result;
+  }
+
+  return data;
+}
+
+function applyVariables(question) {
+  if (!question.variables || question.variables === "") {
+    return question;
+  }
+
+  const varMap = buildVariableMap(question.variables);
+  return replaceVariablesDeep(question, varMap);
+}
+
+// End of variable replacer.
+
+//Find, evaluate and replace <eval> strings
+
+function evaluateEvalTags(str, evaluateExpression) {
+  if (typeof str !== "string") return str;
+
+  return str.replace(
+    /<eval>([\s\S]*?)<\/eval>/g,
+    (_, expr) => {
+      try {
+        const value = evaluateExpression(expr.trim());
+        return value;
+      } catch (err) {
+        console.error("Eval error:", expr, err);
+        return `<eval>${expr}</eval>`; // fail safely
+      }
+    }
+  );
+}
+
+function evaluateEvalDeep(data, evaluateExpression, sigFigs) {
+  if (typeof data === "string") {
+    return data.replace(/<eval>([\s\S]*?)<\/eval>/g, (_, expr) => {
+      const rawValue = evaluateExpression(expr.trim());
+      const rounded = roundToSigFigs(rawValue, sigFigs);
+      return rounded;
+    });
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item =>
+      evaluateEvalDeep(item, evaluateExpression, sigFigs)
+    );
+  }
+
+  if (data !== null && typeof data === "object") {
+    const result = {};
+    for (const [key, value] of Object.entries(data)) {
+      result[key] = evaluateEvalDeep(
+        value,
+        evaluateExpression,
+        sigFigs
+      );
+    }
+    return result;
+  }
+
+  return data;
+}
+
+function applyEval(question, evaluateExpression) {
+  const sigFigs = getQuestionSigFigs(question);
+  return evaluateEvalDeep(question, evaluateExpression, sigFigs);
+}
+
+
+function processQuestion(question) {
+  return applyEval(
+    applyVariables(
+      preprocessQuestion(question)
+    ),
+    evaluateExpression
+  );
+}
+
+
+function evaluateExpression(expr) {
+  const tokens = insertImplicitMultiplication(tokenize(expr));;
+  const ast = parse(tokens);
+  return evaluate(ast);
+}
+
+function getQuestionSigFigs(question) {
+  if (!Array.isArray(question.variables) || question.variables.length === 0) {
+    return null; // no rounding
+  }
+
+  return Math.min(
+    ...question.variables
+      .map(v => Number(v.sigfig))
+      .filter(Number.isFinite)
+  );
+}
+
+function roundToSigFigs(value, sigFigs) {
+  if (sigFigs == null) return value;
+  if (value === 0) return 0;
+
+  return Number.parseFloat(
+    Number(value).toPrecision(sigFigs)
+  );
+}
+
+
+    function parseFormattedText(input) {
+        const tokens = [];
+        let i = 0;
+
+        const formatStack = [{
+            bold: false,
+            italics: false,
+            underline: false,
+            superScript: false,
+            subScript: false,
+        }];
+
+        function currentFormat() {
+            return { ...formatStack[formatStack.length - 1] };
+        }
+
+        while (i < input.length) {
+            // --- Formatting tags ---
+            if (input.startsWith("<b>", i)) {
+            formatStack.push({ ...currentFormat(), bold: true });
+            i += 3;
+            continue;
+            }
+            if (input.startsWith("</b>", i)) {
+            formatStack.pop();
+            i += 4;
+            continue;
+            }
+
+            if (input.startsWith("<i>", i)) {
+            formatStack.push({ ...currentFormat(), italics: true });
+            i += 3;
+            continue;
+            }
+            if (input.startsWith("</i>", i)) {
+            formatStack.pop();
+            i += 4;
+            continue;
+            }
+
+            if (input.startsWith("<u>", i)) {
+            formatStack.push({ ...currentFormat(), underline: true });
+            i += 3;
+            continue;
+            }
+            if (input.startsWith("</u>", i)) {
+            formatStack.pop();
+            i += 4;
+            continue;
+            }
+
+            if (input.startsWith("<sup>", i)) {
+            formatStack.push({ ...currentFormat(), superScript: true });
+            i += 5;
+            continue;
+            }
+            if (input.startsWith("</sup>", i)) {
+            formatStack.pop();
+            i += 6;
+            continue;
+            }
+
+            if (input.startsWith("<sub>", i)) {
+            formatStack.push({ ...currentFormat(), subScript: true });
+            i += 5;
+            continue;
+            }
+            if (input.startsWith("</sub>", i)) {
+            formatStack.pop();
+            i += 6;
+            continue;
+            }
+
+            // --- Plain text ---
+            let text = "";
+            while (i < input.length && input[i] !== "<") {
+            text += input[i];
+            i++;
+            }
+
+            if (text) {
+            tokens.push({
+                type: "text",
+                value: text,
+                format: currentFormat(),
+            });
+            }
+        }
+
+        return tokens;
+    }
+
+
+    function renderTextAST(tokens, docx) {
+        const { TextRun } = docx;
+
+        return tokens.map(token =>
+            new TextRun({
+            text: token.value,
+            font: DEFAULT_FONT,
+            size: 22,
+            bold: token.format.bold,
+            italics: token.format.italics,
+            underline: token.format.underline ? {} : undefined,
+            superScript: token.format.superScript,
+            subScript: token.format.subScript,
+            })
+        );
+    }
+
+
+    
+    function splitTextAndEquations(input) {
+        const parts = [];
+        const regex = /<equ>([\s\S]*?)<\/equ>/g;
+
+        let lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(input)) !== null) {
+            if (match.index > lastIndex) {
+            parts.push({
+                type: "text",
+                value: input.slice(lastIndex, match.index),
+            });
+            }
+
+            parts.push({
+            type: "equation",
+            value: match[1],
+            });
+
+            lastIndex = regex.lastIndex;
+        }
+
+        if (lastIndex < input.length) {
+            parts.push({
+            type: "text",
+            value: input.slice(lastIndex),
+            });
+        }
+
+        return parts;
+    }
+
+function splitByLineBreaks(input) {
+        return input
+            .split(/<br\s*\/?>\s*<\/br>|<br\s*\/?>/gi)
+            .map(s => s.trim())
+            .filter(Boolean);
+    }
+
+    function buildParagraphsFromMixedContent(input, docx, layout={}) {
+        const { Paragraph, Math } = docx;
+        const {
+            spacingBefore = 120,
+            leftIndent = 0,
+            rightIndent = 0,
+            hangingIndent = 0,
+            alignLeftRight = docx.AlignmentType.LEFT,
+            tabStopArray = [
+                {
+                    type: docx.TabStopType.LEFT,
+                    position: 410, 
+                }
+            ]
+        } = layout
+
+        const lines = splitByLineBreaks(input);
+        const paragraphs = [];
+
+        for (const line of lines) {
+            const parts = splitTextAndEquations(line);
+            const children = [];
+
+            for (const part of parts) {
+                if (part.type === "text") {
+                    const textAST = parseFormattedText(part.value);
+                    children.push(...renderTextAST(textAST, docx));
+                }
+
+                if (part.type === "equation") {
+                    const ast = equationParser(part.value);
+                    const mathChildren = renderMathAST(ast, docx);
+
+                    children.push(
+                        new docx.Math({
+                            children: mathChildren,
+                        })
+                    );
+                }
+            }
+
+            paragraphs.push(
+                new Paragraph({ 
+                    children,
+                    alignment: alignLeftRight,
+                    spacing: {
+                        before: spacingBefore,  // space before paragraph
+                        line: 290,
+                    },
+                    
+                    indent: {
+                        left:leftIndent,
+                        right: rightIndent,
+                        hanging: hangingIndent,
+                    },
+                    
+                    tabStops: tabStopArray,
+                    run: {
+                        size: 22,
+                    }, 
+                })
+            );
+        }
+
+        return paragraphs;
+    }
+
+
+    // --- Your parser (shortened for clarity) ---
+    function findMatchingBrace(str, openIndex) {
+        let depth = 0;
+        for (let i = openIndex; i < str.length; i++) {
+        if (str[i] === "{") depth++;
+        if (str[i] === "}") depth--;
+        if (depth === 0) return i;
+        }
+        return -1;
+    }
+
+    function equationParser(equation) {
+        const tokens = [];
+        let i = 0;
+
+        while (i < equation.length) {
+            if (equation.startsWith("\\frac{", i)) {
+                const n0 = i + 6;
+                const n1 = findMatchingBrace(equation, n0 - 1);
+                const d0 = n1 + 2;
+                const d1 = findMatchingBrace(equation, d0 - 1);
+
+                tokens.push({
+                type: "fraction",
+                numerator: equationParser(equation.slice(n0, n1)),
+                denominator: equationParser(equation.slice(d0, d1)),
+                });
+
+                i = d1 + 1;
+                continue;
+            }
+
+            if (equation.startsWith("\\sqrt{", i)) {
+                const s0 = i + 6;
+                const s1 = findMatchingBrace(equation, s0 - 1);
+
+                tokens.push({
+                type: "sqrt",
+                value: equationParser(equation.slice(s0, s1)),
+                });
+
+                i = s1 + 1;
+                continue;
+            }
+
+            if (equation[i] === "^" && equation[i + 1] === "{") {
+                const s0 = i + 2;
+                const s1 = findMatchingBrace(equation, s0 - 1);
+
+                const last = tokens[tokens.length - 1];
+                if (last?.type === "sum") {
+                    last.superScript = equationParser(equation.slice(s0, s1));
+                } else {
+                    tokens.push({
+                        type: "superscript",
+                        value: equationParser(equation.slice(s0, s1)),
+                    });
+                }
+
+                i = s1 + 1;
+                continue;
+            }
+
+            if (equation[i] === "_" && equation[i + 1] === "{") {
+                const s0 = i + 2;
+                const s1 = findMatchingBrace(equation, s0 - 1);
+
+                const last = tokens[tokens.length - 1];
+                if (last?.type === "sum") {
+                    last.subScript = equationParser(equation.slice(s0, s1));
+                } else {
+                    tokens.push({
+                        type: "subscript",
+                        value: equationParser(equation.slice(s0, s1)),
+                    });
+                }
+
+                i = s1 + 1;
+                continue;
+            }
+
+            if (equation.startsWith("\\sum", i)) {
+                i += 4;
+
+                let body = [];
+
+                // If immediately followed by { ... }, treat as sum body
+                if (equation[i] === "{") {
+                    const b0 = i + 1;
+                    const b1 = findMatchingBrace(equation, i);
+                    body = equationParser(equation.slice(b0, b1));
+                    i = b1 + 1;
+                }
+
+                tokens.push({
+                    type: "sum",
+                    body,
+                    subScript: null,
+                    superScript: null,
+                });
+
+                continue;
+            }
+
+            tokens.push({ type: "text", value: equation[i] });
+            i++;
+        }
+
+        return tokens;
+    }
+
+    // --- Renderer from AST ---
+    function renderMathAST(tokens) {
+        const {
+        MathRun,
+        MathFraction,
+        MathRadical,
+        MathSuperScript,
+        MathSubScript,
+        MathSum,
+        } = docx;
+
+        const runs = [];
+
+        for (const token of tokens) {
+            if (token.type === "text") {
+                runs.push(new MathRun(token.value));
+            }
+
+            if (token.type === "superscript") {
+                const base = runs.pop();
+                runs.push(new MathSuperScript({
+                children: [base],
+                superScript: renderMathAST(token.value),
+                }));
+            }
+
+            if (token.type === "subscript") {
+                const base = runs.pop();
+                runs.push(new MathSubScript({
+                children: [base],
+                subScript: renderMathAST(token.value),
+                }));
+            }
+
+            if (token.type === "fraction") {
+                runs.push(new MathFraction({
+                numerator: renderMathAST(token.numerator),
+                denominator: renderMathAST(token.denominator),
+                }));
+            }
+
+            if (token.type === "sqrt") {
+                runs.push(new MathRadical({
+                children: renderMathAST(token.value),
+                }));
+            }
+
+            if (token.type === "sum") {
+                runs.push(
+                    new MathSum({
+                        children: renderMathAST(token.body),
+                        subScript: token.subScript
+                            ? renderMathAST(token.subScript)
+                            : undefined,
+                        superScript: token.superScript
+                            ? renderMathAST(token.superScript)
+                            : undefined,
+                    })
+                );
+            }
+
+        }
+
+        return runs;
+    }
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+async function createAutoSizedImageRun(url) {
+  // Load image to get natural size
+  const img = await loadImage(url);
+
+  // Fetch raw image bytes
+  const buffer = await fetch(url).then(r => r.arrayBuffer());
+  
+return new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        alignment: docx.AlignmentType.CENTER,
+        children: [
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer),
+                transformation: {
+                width: img.naturalWidth/1.5,
+                height: img.naturalHeight/1.5,
+                },
+            }),
+        ]
+    });
+}
+
+async function createAutoSizedMCImageRun(url) {
+  // Load image to get natural size
+  const img = await loadImage(url);
+
+  // Fetch raw image bytes
+  const buffer = await fetch(url).then(r => r.arrayBuffer());
+  
+return new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        tabStops: [
+            {
+                type: docx.TabStopType.LEFT,
+                position: 300, 
+            },
+        ],
+        children: [
+            new docx.TextRun({
+                text: "\t",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer),
+                transformation: {
+                width: img.naturalWidth/1.5,
+                height: img.naturalHeight/1.5,
+                },
+            }),
+        ]
+    });
+}
+
+async function createAutoSizedMCTwoColImageRun(url1, url2, url3, url4) {
+  // Load image to get natural size
+  const img1 = await loadImage(url1);
+  const buffer1 = await fetch(url1).then(r => r.arrayBuffer());
+
+  const img2 = await loadImage(url2);
+  const buffer2 = await fetch(url2).then(r => r.arrayBuffer());
+
+  const img3 = await loadImage(url3);
+  const buffer3 = await fetch(url3).then(r => r.arrayBuffer());
+
+  const img4= await loadImage(url4);
+  const buffer4 = await fetch(url4).then(r => r.arrayBuffer());
+  
+return [
+    new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        tabStops: [
+            {
+                type: docx.TabStopType.LEFT,
+                position: 300, 
+            },
+            {
+                type: docx.TabStopType.LEFT,
+                position: 4500, 
+            },
+        ],
+        children: [
+            new docx.TextRun({
+                text: "A.",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+          
+            new docx.TextRun({
+                text: "\t\tB.",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+        ]
+    }),
+
+    new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        tabStops: [
+            {
+                type: docx.TabStopType.LEFT,
+                position: 300, 
+            },
+            {
+                type: docx.TabStopType.LEFT,
+                position: 4800, 
+            },
+        ],
+        children: [
+            new docx.TextRun({
+                text: "\t",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer1),
+                transformation: {
+                width: img1.naturalWidth/1.5,
+                height: img1.naturalHeight/1.5,
+                },
+            }),
+            new docx.TextRun({
+                text: "\t",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer2),
+                transformation: {
+                width: img2.naturalWidth/1.5,
+                height: img2.naturalHeight/1.5,
+                },
+            }),
+        ]
+    }),
+    new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        tabStops: [
+            {
+                type: docx.TabStopType.LEFT,
+                position: 300, 
+            },
+            {
+                type: docx.TabStopType.LEFT,
+                position: 4500, 
+            },
+        ],
+        children: [
+            new docx.TextRun({
+                text: "C.",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+          
+            new docx.TextRun({
+                text: "\t\tD.",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+        ]
+    }),
+
+    new docx.Paragraph({
+        spacing: {
+            before: 120,  // space before paragraph
+        },
+        tabStops: [
+            {
+                type: docx.TabStopType.LEFT,
+                position: 300, 
+            },
+            {
+                type: docx.TabStopType.LEFT,
+                position: 4800, 
+            },
+        ],
+        children: [
+            new docx.TextRun({
+                text: "\t",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer3),
+                transformation: {
+                width: img3.naturalWidth/1.5,
+                height: img3.naturalHeight/1.5,
+                },
+            }),
+            new docx.TextRun({
+                text: "\t",
+                bold: true,
+                font: "Arial",
+                size: 11*2,
+            }),
+            new docx.ImageRun({
+                type: "png",
+                data: new Uint8Array(buffer4),
+                transformation: {
+                width: img4.naturalWidth/1.5,
+                height: img4.naturalHeight/1.5,
+                },
+            }),
+        ]
+    }),
+];
+}
+
+function createTableChoices(tableData, textData){
+    let colsNumber = tableData.headers.length;
+    let tableRows = [];
+    //Header cells
+    let headerCells = [];
+    
+    //Empty top-left cell
+    headerCells.push(new docx.TableCell({
+        borders: {
+            top:    { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+            bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+            left:   { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+        },
+        width: {
+            size: 500,
+            type: WidthType.DXA,
+        },
+        children:[
+            ...buildParagraphsFromMixedContent("", docx)
+        ],
+    }));
+
+    for (let i=1; i<colsNumber; i++){
+        let tableCell = new docx.TableCell({
+            margins: {
+                left: 100,
+            },
+            width: {
+                size: 3000,
+                type: WidthType.DXA,
+            },
+            children:[
+                ...buildParagraphsFromMixedContent(tableData.headers[i], docx),
+            ],
+        });
+        headerCells.push(tableCell);
+    }
+    
+    let headerRow = new docx.TableRow({
+        children: headerCells,
+    });
+    tableRows.push(headerRow);
+
+    //Data cells
+    const rowLabels = ["<b>A.</b>", "<b>B.</b>", "<b>C.</b>", "<b>D.</b>"];
+    for (let r=0; r<rowLabels.length; r++){
+        let dataCells = [];
+        let textStrNum = r+1;
+        dataCells.push(new docx.TableCell({
+            borders: {
+                top:    { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+                left:   { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
+            },
+            width: {
+                size: 500,
+                type: WidthType.DXA,
+            },
+            children:[
+                ...buildParagraphsFromMixedContent(rowLabels[r], docx),
+            ],
+        }));
+
+        for (let c=0; c<colsNumber-1; c++){
+            dataCells.push(new docx.TableCell({
+                width: {
+                    size: 3000,
+                    type: WidthType.DXA,
+                },
+                margins: {
+                    left: 100,
+                },
+                    children:[
+                    ...buildParagraphsFromMixedContent(textData["text"+textStrNum][c], docx),
+                ],
+            }));
+        }
+        
+        tableRows.push(new docx.TableRow({
+            children: dataCells,
+        }));
+
+
+    }
+
+    let table= new docx.Table({
+        columnWidths: [500, 3000, 3000],
+        rows: tableRows,
+        
+    });
+
+    return table;
+}
+
+function totalMarksString(questionObj){
+    //add up total marks from question, parts and subparts
+        let marksT = 0;
+        let marksString = "";
+        if (questionObj.marksTotal){
+            marksT = Number(questionObj.marksTotal);
+        }
+        else {
+            for (let p=0; p<questionObj.parts.length; p++){
+                for (let s=0; s<questionObj.parts[p].subParts.length; s++){
+                    marksT = marksT + Number(questionObj.parts[p].subParts[s].marks);
+                }
+                marksT = marksT + Number(questionObj.parts[p].marks);
+            }
+        }
+        
+        if (marksT == 1){
+            marksString = "1 mark";
+        }
+        else {
+            marksString = marksT.toString() + " marks";
+        }
+        return marksString
+}
+
+async function getMCparaArray(mcQuestionData){
+    let mcParaArray = [];
+    let pagePortion = 400;
+
+    for (let i=0; i<mcQuestionData.length; i++){
+        let pageBreak = false;
+        let qNum = i+1;
+        pagePortion += Number(mcQuestionData[i].pagePortion);
+        let questionSpacing = 240;
+        
+        
+        if (pagePortion > 1400){
+            pageBreak = true;
+            
+            pagePortion = Number(mcQuestionData[i].pagePortion);
+            mcParaArray.push(new docx.Paragraph({ 
+                pageBreakBefore: true,
+                spacing: {
+                    //before: 120,  // space before paragraph
+                    line: 1,
+                },
+            }));
+            questionSpacing = 120;
+        }
+
+        mcParaArray.push(new docx.Paragraph({
+                            
+                            spacing: {
+                                before: questionSpacing, 
+                            },
+                            
+                            children: [
+                                new docx.TextRun({
+                                    text: "Question "+qNum,
+                                    size: 10*2,
+                                    font: "Arial",
+                                    bold: true,
+                                }),
+                            ],
+                        }));
+        
+        if (mcQuestionData[i].textFirst != ""){
+            let mcTextFirst = buildParagraphsFromMixedContent(mcQuestionData[i].textFirst, docx);
+            mcParaArray.push(...mcTextFirst);
+        }
+        if (mcQuestionData[i].image != ""){
+            let mcImage = await createAutoSizedImageRun(mcQuestionData[i].image.path);
+            mcParaArray.push(mcImage);
+        }
+        if (mcQuestionData[i].textSecond != ""){
+            let mcTextSecond = buildParagraphsFromMixedContent(mcQuestionData[i].textSecond, docx);
+            mcParaArray.push(...mcTextSecond);
+        }
+        
+        let mcChoiceOne
+        let mcChoiceTwo
+        let mcChoiceThree
+        let mcChoiceFour
+
+        // If standard text choices
+        if (mcQuestionData[i].choices.text != "" && mcQuestionData[i].choices.table == ""){
+            mcChoiceOne = buildParagraphsFromMixedContent("<b>A.</b> \t" + mcQuestionData[i].choices.text.text1, docx);
+            mcChoiceTwo = buildParagraphsFromMixedContent("<b>B.</b> \t" + mcQuestionData[i].choices.text.text2, docx);
+            mcChoiceThree = buildParagraphsFromMixedContent("<b>C.</b> \t" + mcQuestionData[i].choices.text.text3, docx);
+            mcChoiceFour = buildParagraphsFromMixedContent("<b>D.</b> \t" + mcQuestionData[i].choices.text.text4, docx);
+            mcParaArray.push(...mcChoiceOne);
+            mcParaArray.push(...mcChoiceTwo);
+            mcParaArray.push(...mcChoiceThree);
+            mcParaArray.push(...mcChoiceFour);
+        }
+
+        // If image choices standard layout
+        else if(mcQuestionData[i].choices.image.length > 0 && mcQuestionData[i].choices.layout == ""){
+            mcChoiceOne = buildParagraphsFromMixedContent("<b>A.</b>", docx);
+            mcParaArray.push(...mcChoiceOne); 
+            mcParaArray.push(await createAutoSizedMCImageRun(mcQuestionData[i].choices.image[0].path));
+            mcChoiceTwo = buildParagraphsFromMixedContent("<b>B.</b>", docx);
+            mcParaArray.push(...mcChoiceTwo);
+            mcParaArray.push(await createAutoSizedMCImageRun(mcQuestionData[i].choices.image[1].path));
+            mcChoiceThree = buildParagraphsFromMixedContent("<b>C.</b>", docx);
+            mcParaArray.push(...mcChoiceThree);
+            mcParaArray.push(await createAutoSizedMCImageRun(mcQuestionData[i].choices.image[2].path));
+            mcChoiceFour = buildParagraphsFromMixedContent("<b>D.</b>", docx);
+            mcParaArray.push(...mcChoiceFour);
+            mcParaArray.push(await createAutoSizedMCImageRun(mcQuestionData[i].choices.image[3].path));
+        }
+
+        // If image choices two-column layout
+        else if(mcQuestionData[i].choices.image.length > 0 && mcQuestionData[i].choices.layout == "two-column"){
+            let twoColImageRuns = await createAutoSizedMCTwoColImageRun(
+                mcQuestionData[i].choices.image[0].path, 
+                mcQuestionData[i].choices.image[1].path,
+                mcQuestionData[i].choices.image[2].path,
+                mcQuestionData[i].choices.image[3].path     
+            );
+            mcParaArray.push(...twoColImageRuns);
+        }
+        // If table choices
+        else if(mcQuestionData[i].choices.table != ""){
+            let mcTableChoice = createTableChoices(
+                mcQuestionData[i].choices.table, 
+                mcQuestionData[i].choices.text,
+            );
+            mcParaArray.push(mcTableChoice);
+        }
+
+    }
+    
+    return mcParaArray;
+}
+
+function createERTable(tableData){
+    const cellWidth = Number(tableData.cellWidth);
+    let colWidthArray = [];
+    let tableRows = [];
+    
+    
+    for(c=0;c<tableData.columnArray[0].length; c++){
+        colWidthArray.push(cellWidth);
+    }
+
+
+    for (let r=0; r<tableData.columnArray.length; r++){
+        let dataCells = [];
+        for(c=0;c<tableData.columnArray[r].length; c++){
+            dataCells.push(new docx.TableCell({
+                width: {
+                    size: cellWidth,
+                    type: WidthType.DXA,
+                },
+                margins: {
+                    left: 100,
+                },
+                    children:[
+                    ...buildParagraphsFromMixedContent(tableData.columnArray[r][c], docx),
+                ],
+            }));
+        }
+        
+        tableRows.push(new docx.TableRow({
+            children: dataCells,
+        }));
+              
+    }
+
+    
+   
+    let table= new docx.Table({
+        columnWidths: colWidthArray,
+        rows: tableRows,
+        
+    });
+
+    
+
+    return table;
+
+}
+
+async function getERparaArray(erQuestionData){
+    let erParaArray = [];
+    let pagePortion = 400;
+    const partLabels = ["a.", "b.","c.", "d.","e.", "f.","g.", "h.","i.", "j.","k.", "l.",];
+    const subPartLabels = ["i.", "ii.", "iii.", "iv.", "v.","vi.", "vii.","viii.", "xi.","x.", "xi.","xii.", "xiii.",]
+
+    for (let i=0; i<erQuestionData.length; i++){
+        let totalMarks = totalMarksString(erQuestionData[i]);
+        let pageBreak = false;
+        let qNum = i+1;
+        if(i==0){
+           pagePortion += Number(erQuestionData[i].pagePortion); 
+        }
+        else{
+           pagePortion = Number(erQuestionData[i].pagePortion); 
+        }
+        
+        let questionSpacing = 240;
+
+        //page break for new question
+        if (i > 0){
+            pageBreak = true;
+            
+        
+            erParaArray.push(new docx.Paragraph({ 
+                pageBreakBefore: true,
+                spacing: {
+                    //before: 120,  // space before paragraph
+                    line: 1,
+                },
+            }));
+            questionSpacing = 120;
+        }
+
+        erParaArray.push(new docx.Paragraph({              
+            spacing: {
+                before: questionSpacing, 
+            },
+            children: [
+                new docx.TextRun({
+                    text: "Question "+qNum,
+                    size: 10*2,
+                    font: "Arial",
+                    bold: true,
+                }),
+                new docx.TextRun({
+                    text: " ("+totalMarks+")",
+                    size: 10*2,
+                    font: "Arial",
+                    bold: false,
+                }),
+            ],
+        }));
+
+        if (erQuestionData[i].textFirst != ""){
+            let erTextFirst = buildParagraphsFromMixedContent(erQuestionData[i].textFirst, docx);
+            erParaArray.push(...erTextFirst);
+        }
+        if (erQuestionData[i].image != ""){
+            let erImage = await createAutoSizedImageRun(erQuestionData[i].image.path);
+            erParaArray.push(erImage);
+        }
+
+        if (erQuestionData[i].table != ""){
+            let erTable = createERTable(erQuestionData[i].table);
+            erParaArray.push(erTable);
+        }
+
+        if (erQuestionData[i].textSecond != ""){
+            let erTextSecond = buildParagraphsFromMixedContent(erQuestionData[i].textSecond, docx);
+            erParaArray.push(...erTextSecond);
+        }
+        
+        //If question has no parts
+        if (erQuestionData[i].parts.length == 0){
+            //Draw lines, if lines
+
+            // Add lines
+            if (erQuestionData[i].lines.length>0){
+                let linesNumb = Number(erQuestionData[i].lines);
+                for(let lines=0; lines<linesNumb; lines++){
+                    erParaArray.push(
+                        new docx.Paragraph({              
+                            spacing: {
+                                before: 240, 
+                            },
+                            
+                            indent: {
+                                left: 1,
+                                right:1,
+                                hanging:1,
+                            },
+
+                            tabStops:[
+                                {
+                                    type: docx.TabStopType.LEFT,
+                                    position: 810, 
+                                },
+                                {
+                                    type: docx.TabStopType.LEFT,
+                                    position: 9100, 
+                                },
+                            ],
+
+                            children: [
+                                new docx.TextRun({
+                                    text: "\t___________________________________________________________________________________________________",
+                                    size: 10*2,
+                                    font: "Times New Roman",
+                                    bold: false,
+                                }),     
+                            ],
+                        })
+                    );
+                }
+            }
+            // Add answer box if any
+            if (erQuestionData[i].answerBox == "true"){
+                erParaArray.push(new docx.Paragraph({ 
+                    spacing: {
+                        after: 240,  // space before paragraph
+                        line: 1,
+                    },
+                }));
+
+                erParaArray.push(new docx.Table({
+                    columnWidths: [2300],
+                    indent: {
+                        size: 0,              // twips (0.5 inch)
+                        type: WidthType.DXA,
+                    },
+                    rows:[
+                        new docx.TableRow({
+                            height: {
+                                value: 700,          // twips (600 ≈ 0.42 inches)
+                                rule: "exact",       // EXACT height
+                            },
+                            children:[
+                                new docx.TableCell({
+                                    verticalAlign: VerticalAlign.CENTER,
+                                    margins: {
+                                        right: 150,
+                                    },
+                                    width: {
+                                        size: 2300,
+                                        type: WidthType.DXA,
+                                    },
+                                    children: [
+                                        ...buildParagraphsFromMixedContent(erQuestionData[i].units, docx, {alignLeftRight: docx.AlignmentType.RIGHT})     
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                }));
+            }
+
+
+            //Draw Box, if box (if unit draw unit)
+        }
+
+        // Else if question has more than one part
+        if (erQuestionData[i].parts.length > 0){
+            // for each part add label and firstText (if any)
+            for (let p = 0; p< erQuestionData[i].parts.length; p++){
+                pagePortion += Number(erQuestionData[i].parts[p].pagePortion);
+                if (pagePortion > 1400){
+                    //pageBreak = true;
+                    
+                    pagePortion = Number(erQuestionData[i].parts[p].pagePortion);
+                    erParaArray.push(new docx.Paragraph({ 
+                        pageBreakBefore: true,
+                        spacing: {
+                            //before: 120,  // space before paragraph
+                            line: 1,
+                        },
+                    }));
+                    questionSpacing = 120;
+                }
+
+                
+                let marks = "";
+                
+
+                // if part has subparts (else continue with part)
+                
+                if(erQuestionData[i].parts[p].subParts.length>0){
+                    
+                    for (let s=0; s<erQuestionData[i].parts[p].subParts.length; s++){
+                        if(erQuestionData[i].parts[p].subParts[s].marks == "1"){
+                            marks = "1 mark";
+                        }
+                        else{
+                            marks = erQuestionData[i].parts[p].subParts[s].marks + " marks"
+                        }
+                        
+                        //If no text first for the part
+                        if (erQuestionData[i].parts[p].textFirst == ""){
+                            
+                            let labelStr = `<b>${partLabels[p]}\t ${subPartLabels[s]}\t</b>`;
+                            if(s>0){
+                                labelStr=`<b>\t ${subPartLabels[s]}\t</b>`;
+                            }
+
+                            let erSubPartTextFirst = buildParagraphsFromMixedContent(`${labelStr} ${erQuestionData[i].parts[p].subParts[s].textFirst}\t${marks}`, docx, 
+                                {spacingBefore:480,leftIndent: 800, rightIndent:1500, hangingIndent:800, tabStopArray:[
+                                    {
+                                        type: docx.TabStopType.RIGHT,
+                                        position: 600, 
+                                    },
+                                    {
+                                        type: docx.TabStopType.LEFT,
+                                        position: 800, 
+                                    },
+                                    {
+                                        type: docx.TabStopType.LEFT,
+                                        position: 9100, 
+                                    },
+                                ]
+                            });
+                            erParaArray.push(...erSubPartTextFirst);    
+                        }
+                        else{
+                            // let labelStr = `<b>${partLabels[p]}\t</b>`;
+                            // if(s>0){
+                            //     labelStr=`<b>\t \t</b>`;
+                            // }
+
+                            if(s==0){
+                                let erPartTextFirst = buildParagraphsFromMixedContent(`<b>${partLabels[p]}\t</b>${erQuestionData[i].parts[p].textFirst}`, docx, 
+                                    {spacingBefore:480,leftIndent: 400, rightIndent:1500, hangingIndent:400, tabStopArray:[
+                                        {
+                                            type: docx.TabStopType.RIGHT,
+                                            position: 800, 
+                                        },
+                                        {
+                                            type: docx.TabStopType.LEFT,
+                                            position: 810, 
+                                        },
+                                        {
+                                            type: docx.TabStopType.LEFT,
+                                            position: 9100, 
+                                        },
+                                    ]
+                                });
+                                erParaArray.push(...erPartTextFirst); 
+                            }
+                            
+                            let erSubPartTextFirst = buildParagraphsFromMixedContent(`<b>\t ${subPartLabels[s]}\t</b> ${erQuestionData[i].parts[p].subParts[s].textFirst}\t${marks}`, docx, 
+                                {spacingBefore:240,leftIndent: 800, rightIndent:1500, hangingIndent:800, tabStopArray:[
+                                    {
+                                        type: docx.TabStopType.RIGHT,
+                                        position: 600, 
+                                    },
+                                    {
+                                        type: docx.TabStopType.LEFT,
+                                        position: 800, 
+                                    },
+                                    {
+                                        type: docx.TabStopType.LEFT,
+                                        position: 9100, 
+                                    },
+                                ]
+                            });
+                            erParaArray.push(...erSubPartTextFirst); 
+                        }
+
+                        //add subpart image
+                        if(erQuestionData[i].parts[p].subParts[s].image !=""){
+                            let erSubPartImage = await createAutoSizedImageRun(erQuestionData[i].parts[p].subParts[s].image.path);
+                            erParaArray.push(erSubPartImage);
+                        }
+
+                        //add lines for sub part
+                        
+                        if(erQuestionData[i].parts[p].subParts[s].lines.length > 0){
+                            let numLines = Number(erQuestionData[i].parts[p].subParts[s].lines);
+                            
+                            for(let lines=0; lines<numLines; lines++){
+                                erParaArray.push(
+                                    new docx.Paragraph({              
+                                        spacing: {
+                                            before: 240, 
+                                        },
+                                        
+                                        indent: {
+                                            left: 800,
+                                            right:1500,
+                                            hanging:800,
+                                        },
+
+                                        tabStops:[
+                                            {
+                                                type: docx.TabStopType.RIGHT,
+                                                position: 600, 
+                                            },
+                                            {
+                                                type: docx.TabStopType.LEFT,
+                                                position: 800, 
+                                            },
+                                            {
+                                                type: docx.TabStopType.LEFT,
+                                                position: 9100, 
+                                            },
+                                        ],
+
+                                        children: [
+                                            new docx.TextRun({
+                                                text: "\t\t____________________________________________________________________________",
+                                                size: 10*2,
+                                                font: "Times New Roman",
+                                                bold: false,
+                                            }),     
+                                        ],
+                                    })
+                                );
+                            }
+                            
+                            //add subpart box if any
+                            if(erQuestionData[i].parts[p].subParts[s].answerBox=="true"){
+                                erParaArray.push(new docx.Paragraph({ 
+                                    spacing: {
+                                        after: 240,  // space before paragraph
+                                        line: 1,
+                                    },
+                                }));
+
+                                erParaArray.push(new docx.Table({
+                                    columnWidths: [2300],
+                                    indent: {
+                                        size: 800,              // twips (0.5 inch)
+                                        type: WidthType.DXA,
+                                    },
+                                    rows:[
+                                        new docx.TableRow({
+                                            height: {
+                                                value: 700,          // twips (600 ≈ 0.42 inches)
+                                                rule: "exact",       // EXACT height
+                                            },
+                                            children:[
+                                                new docx.TableCell({
+                                                    verticalAlign: VerticalAlign.CENTER,
+                                                    margins: {
+                                                        right: 150,
+                                                    },
+                                                    width: {
+                                                        size: 2300,
+                                                        type: WidthType.DXA,
+                                                    },
+                                                    children: [
+                                                        ...buildParagraphsFromMixedContent(erQuestionData[i].parts[p].subParts[s].units, docx, {alignLeftRight: docx.AlignmentType.RIGHT})     
+                                                    ]
+                                                })
+                                            ]
+                                        })
+                                    ]
+                                }));
+                            }
+                            
+                        }
+                    }
+                }
+                // else continue to write part text
+                else{
+                    if(erQuestionData[i].parts[p].marks == "1"){
+                        marks = "1 mark";
+                    }
+                    else{
+                        marks = erQuestionData[i].parts[p].marks + " marks"
+                    }
+                
+                    //If part has before Text
+                    if(erQuestionData[i].parts[p].beforeText !=""){
+                        erParaArray.push(...buildParagraphsFromMixedContent(erQuestionData[i].parts[p].beforeText,docx, {spacingBefore:480}));
+                    }
+
+                    //if part has before image
+                    if(erQuestionData[i].parts[p].beforeImage !=""){
+                        let erBeforeImage = await createAutoSizedImageRun(erQuestionData[i].parts[p].beforeImage.path);
+                        erParaArray.push(erBeforeImage);
+                    }
+
+                    //if part has before table
+                     if(erQuestionData[i].parts[p].beforeTable !=""){
+                        erParaArray.push(createERTable(erQuestionData[i].parts[p].beforeTable));
+                    }
+
+                    let erPartTextFirst = buildParagraphsFromMixedContent(`<b>${partLabels[p]}\t</b>${erQuestionData[i].parts[p].textFirst}\t${marks}`, docx, 
+                        {spacingBefore:480,leftIndent: 400, rightIndent:1500, hangingIndent:400, tabStopArray:[
+                            {
+                                type: docx.TabStopType.RIGHT,
+                                position: 800, 
+                            },
+                            {
+                                type: docx.TabStopType.LEFT,
+                                position: 810, 
+                            },
+                            {
+                                type: docx.TabStopType.LEFT,
+                                position: 9100, 
+                            },
+                        ]
+                    });
+                    erParaArray.push(...erPartTextFirst);
+
+                    //if there is a part image
+                    if(erQuestionData[i].parts[p].image !=""){
+                        let erPartImage = await createAutoSizedImageRun(erQuestionData[i].parts[p].image.path);
+                        erParaArray.push(erPartImage);
+                    }
+
+                    //if there is a part table
+                    if(erQuestionData[i].parts[p].partTable !=""){
+                        erParaArray.push(createERTable(erQuestionData[i].parts[p].partTable));
+                    }
+
+                    // Add lines
+                    if (erQuestionData[i].parts[p].lines.length>0){
+                        let linesNum = Number(erQuestionData[i].parts[p].lines);
+                        for(let lines=0; lines<linesNum; lines++){
+                            erParaArray.push(
+                                new docx.Paragraph({              
+                                    spacing: {
+                                        before: 240, 
+                                    },
+                                    
+                                    indent: {
+                                        left: 400,
+                                        right:1500,
+                                        hanging:400,
+                                    },
+
+                                    tabStops:[
+                                        {
+                                            type: docx.TabStopType.LEFT,
+                                            position: 810, 
+                                        },
+                                        {
+                                            type: docx.TabStopType.LEFT,
+                                            position: 9100, 
+                                        },
+                                    ],
+
+                                    children: [
+                                        new docx.TextRun({
+                                            text: "\t________________________________________________________________________________",
+                                            size: 10*2,
+                                            font: "Times New Roman",
+                                            bold: false,
+                                        }),     
+                                    ],
+                                })
+                            );
+                        }
+                    }
+                    // Add answer box if any
+                    if (erQuestionData[i].parts[p].answerBox == "true"){
+                        erParaArray.push(new docx.Paragraph({ 
+                            spacing: {
+                                after: 240,  // space before paragraph
+                                line: 1,
+                            },
+                        }));
+
+                        erParaArray.push(new docx.Table({
+                            columnWidths: [2300],
+                            indent: {
+                                size: 400,              // twips (0.5 inch)
+                                type: WidthType.DXA,
+                            },
+                            rows:[
+                                new docx.TableRow({
+                                    height: {
+                                        value: 700,          // twips (600 ≈ 0.42 inches)
+                                        rule: "exact",       // EXACT height
+                                    },
+                                    children:[
+                                        new docx.TableCell({
+                                            verticalAlign: VerticalAlign.CENTER,
+                                            margins: {
+                                                right: 150,
+                                            },
+                                            width: {
+                                                size: 2300,
+                                                type: WidthType.DXA,
+                                            },
+                                            children: [
+                                                ...buildParagraphsFromMixedContent(erQuestionData[i].parts[p].units, docx, {alignLeftRight: docx.AlignmentType.RIGHT})     
+                                            ]
+                                        })
+                                    ]
+                                })
+                            ]
+                        }));
+                    }
+                }
+            }
+        }
+    }
+    return erParaArray;
+}
+
+async function getMCsolArray(mcQuestionDataArray){
+    let mcSolArray = [];
+    for(let i=0; i<mcQuestionDataArray.length; i++){
+        let qNum = i+1;
+        mcSolArray.push(
+            new docx.Paragraph({              
+                spacing: {
+                    before: 240, 
+                },
+                children: [
+                    new docx.TextRun({
+                        text: "Question "+qNum,
+                        size: 10*2,
+                        font: "Arial",
+                        bold: true,
+                    }),
+                    new docx.TextRun({
+                        text: " ("+mcQuestionDataArray[i].explanation[0]+")",
+                        size: 10*2,
+                        font: "Arial",
+                        bold: false,
+                    }),
+                ],
+            })
+        );
+
+        // Is here just in case - currently no image solutions for mc questions.
+        if (mcQuestionDataArray[i].solutionImage !=""){
+            mcSolArray.push(
+                await createAutoSizedImageRun(mcQuestionDataArray[i].solutionImage.path)
+            );
+        }
+
+        for(let n=0; n<mcQuestionDataArray[i].solution.length; n++){
+            mcSolArray.push(
+                ...buildParagraphsFromMixedContent(mcQuestionDataArray[i].solution[n], docx) 
+            );
+        }
+
+
+    }
+
+    return mcSolArray;
+
+}
+
+async function getERsolArray(erQuestionDataArray){
+   
+    let erSolArray = [];
+    const partLabels = ["a.", "b.","c.", "d.","e.", "f.","g.", "h.","i.", "j.","k.", "l.",];
+    const subPartLabels = ["i.", "ii.", "iii.", "iv.", "v.","vi.", "vii.","viii.", "xi.","x.", "xi.","xii.", "xiii.",]
+    
+    for(let i=0; i<erQuestionDataArray.length; i++){
+        //If question has no parts
+        if(erQuestionDataArray[i].parts.length == 0){
+            let qNum = i+1;
+            erSolArray.push(
+                new docx.Paragraph({              
+                    spacing: {
+                        before: 240, 
+                    },
+                    children: [
+                        new docx.TextRun({
+                            text: "Question "+qNum,
+                            size: 10*2,
+                            font: "Arial",
+                            bold: true,
+                        }),
+                    ],
+                })
+            );
+
+             //Solution images er.
+             
+            if (erQuestionDataArray[i].solutionImage !=""){
+                erSolArray.push(
+                    await createAutoSizedImageRun(erQuestionDataArray[i].solutionImage.path)
+                );
+            }
+
+            if (erQuestionDataArray[i].solutions[0] != " "){
+                for(let n=0; n<erQuestionDataArray[i].solutions.length; n++){
+                    erSolArray.push(
+                        ...buildParagraphsFromMixedContent(erQuestionDataArray[i].solutions[n], docx) 
+                    );
+                }
+            }
+       }
+
+        //If question has parts
+        else if(erQuestionDataArray[i].parts.length > 0){
+            for(let p=0; p<erQuestionDataArray[i].parts.length; p++){
+                // If no subparts
+                if (erQuestionDataArray[i].parts[p].subParts.length == 0){
+                    let qNum = i+1;
+                    let pLabel = partLabels[p];
+                    erSolArray.push(
+                        new docx.Paragraph({              
+                            spacing: {
+                                before: 240, 
+                            },
+                            children: [
+                                new docx.TextRun({
+                                    text: "Question "+qNum+" - "+pLabel,
+                                    size: 10*2,
+                                    font: "Arial",
+                                    bold: true,
+                                }),
+                            ],
+                        })
+                    );
+                    
+                    //Solution images parts er
+                    if (erQuestionDataArray[i].parts[p].solutionImage !=""){
+                        erSolArray.push(
+                            await createAutoSizedImageRun(erQuestionDataArray[i].parts[p].solutionImage.path)
+                        );
+                    }
+
+                    if (erQuestionDataArray[i].parts[p].solutions[0] != " "){
+                        for(let n=0; n<erQuestionDataArray[i].parts[p].solutions.length; n++){
+                            erSolArray.push(
+                                ...buildParagraphsFromMixedContent(erQuestionDataArray[i].parts[p].solutions[n], docx) 
+                            );
+                        }
+                    }
+                }
+
+                //else if subParts
+                else if (erQuestionDataArray[i].parts[p].subParts.length > 0){
+                    for (let s=0; s<erQuestionDataArray[i].parts[p].subParts.length; s++){
+                        let qNum = i+1;
+                        let pLabel = partLabels[p];
+                        let sLabel = subPartLabels[s];
+
+                        erSolArray.push(
+                            new docx.Paragraph({              
+                                spacing: {
+                                    before: 240, 
+                                },
+                                children: [
+                                    new docx.TextRun({
+                                        text: "Question "+qNum+" - "+pLabel + " " + sLabel,
+                                        size: 10*2,
+                                        font: "Arial",
+                                        bold: true,
+                                    }),
+                                ],
+                            })
+                        );
+                        
+                        //Solution images subparts er
+                        if (erQuestionDataArray[i].parts[p].subParts[s].solutionImage !=""){
+                            erSolArray.push(
+                                await createAutoSizedImageRun(erQuestionDataArray[i].parts[p].subParts[s].solutionImage.path)
+                            );
+                        }
+
+                        if (erQuestionDataArray[i].parts[p].subParts[s].solutions[0] != " "){
+                            for(let n=0; n<erQuestionDataArray[i].parts[p].subParts[s].solutions.length; n++){
+                                erSolArray.push(
+                                    ...buildParagraphsFromMixedContent(erQuestionDataArray[i].parts[p].subParts[s].solutions[n], docx) 
+                                );
+                            }
+                        }
+
+
+
+                    }
+                }
+
+
+            }
+        }
+
+    }
+    return erSolArray;
+}
+
+function getTotalPages(mcQuestionDataArray, erQuestionDataArray){
+    let totalPages = 2;
+    let pagePortion = 400;
+    //Total pages for Multiple Choice
+    for(let i=0; i<mcQuestionDataArray.length; i++){
+        if (pagePortion+Number(mcQuestionDataArray[i].pagePortion)>1400){
+            totalPages++;
+            pagePortion = Number(mcQuestionDataArray[i].pagePortion)
+            
+        }
+        else{
+           pagePortion = pagePortion + Number(mcQuestionDataArray[i].pagePortion);
+        }
+    }
+    const mcTotalPages = totalPages;
+    
+    //Total pages for ER
+
+    pagePortion = 400;
+    for(let i=0; i<erQuestionDataArray.length; i++){
+        totalPages++;
+        //If no parts
+        pagePortion=pagePortion + Number(erQuestionDataArray[i].pagePortion); 
+        
+        if(erQuestionDataArray[i].parts.length > 0){
+            for(let p=0; p<erQuestionDataArray[i].parts.length; p++){
+                if(pagePortion+Number(erQuestionDataArray[i].parts[p].pagePortion)>1400){
+                    totalPages++;
+                    pagePortion = Number(erQuestionDataArray[i].parts[p].pagePortion)
+                }
+                else{pagePortion = pagePortion+Number(erQuestionDataArray[i].parts[p].pagePortion);}
+
+            }
+        }
+        
+        pagePortion = 0;
+
+    }
+
+    let marksT = 0;
+    for(let i=0; i<erQuestionDataArray.length; i++){
+        if (erQuestionDataArray[i].marksTotal){
+            marksT += Number(erQuestionDataArray[i].marksTotal);
+        }
+        else {
+            for (let p=0; p<erQuestionDataArray[i].parts.length; p++){
+                for (let s=0; s<erQuestionDataArray[i].parts[p].subParts.length; s++){
+                    marksT = marksT + Number(erQuestionDataArray[i].parts[p].subParts[s].marks);
+                }
+                marksT = marksT + Number(erQuestionDataArray[i].parts[p].marks);
+              
+            }
+        }
+      
+    }
+    console.log(marksT);
+    return [totalPages,mcTotalPages, erQuestionDataArray.length, mcQuestionDataArray.length, marksT];
+
+}
+
+//Generate the word document
+function generateWordDoc(qIDArray) {
+
+    const data = getData().then(async (data)=>{
+        const date = getTodaysDate();
+        let mcQuestionDataArray = [];
+        let erQuestionDataArray = [];
+        
+        for (let i=0; i<qIDArray.length; i++){
+            let qData=data.find(o => o.id === qIDArray[i])
+            const preprocessed = preprocessQuestion(qData);
+            const withVariables = applyVariables(preprocessed);
+            const evaluated = applyEval(withVariables, evaluateExpression);
+            if (evaluated.style == "MC"){
+                mcQuestionDataArray.push(evaluated);
+            }
+            else {
+                erQuestionDataArray.push(evaluated);
+            }
+        }
+       
+        const pageData = getTotalPages(mcQuestionDataArray, erQuestionDataArray);
+        const totalPages = pageData[0];
+        const mcTotalPages = pageData[1];
+        const mcNumQs = pageData[3];
+        const erNumQs = pageData[2];
+        const erMarksTotal = pageData[4];
+
+        const mcParaArray = await getMCparaArray(mcQuestionDataArray);
+        const erParaArray = await getERparaArray(erQuestionDataArray);
+        const mcSolArray = await getMCsolArray(mcQuestionDataArray);
+        const erSolArray = await getERsolArray(erQuestionDataArray);
+
+
+        
+        const bulletNumbering = {
+            reference: "bullet-list",
+            levels: [
+                {
+                    level: 0,
+                    format: docx.NumberFormat.BULLET,
+                    text: "•",
+                    alignment: docx.AlignmentType.LEFT,
+                    style: {
+                        run: {
+                            font: "Arial",
+                            size: 11*2,   // 11pt
+                        },
+                        paragraph: {
+                            indent: {
+                                left: 180,     // total indent
+                                hanging: 180,  // bullet → text gap
+                            },
+                        },
+                    },
+                },
+            ],
+        };
+    
+        const doc = new docx.Document({
+            styles: {
+                default: {
+                document: {
+                    run: {
+                    font: "Arial",
+                    size: 22, // 11pt
+                    },
+                },
+                },
+            },
+            evenAndOddHeaderAndFooters: true,
+            numbering: {
+                config: [bulletNumbering],
+            },
+
+
+            sections: [{
+                properties: {},
+                children: [
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 480,  // space after paragraph
+                        },
+                        alignment: docx.AlignmentType.RIGHT,
+                        children: [
+                            new docx.TextRun({
+                                text: "Student Name: ____________________",
+                                font: "Arial",
+                                size: 14.5*2,
+                                bold: true,
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 300,  // space after paragraph
+                            after: 960,  // space after paragraph
+                        },
+                        alignment: docx.AlignmentType.RIGHT,
+                        children: [
+                            new docx.TextRun({
+                                text: "Teacher Name: ____________________",
+                                font: "Arial",
+                                size: 14.5*2,
+                                bold: true,
+                            }),
+                        ],
+                    }),
+
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            after: 120,  // space after paragraph
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: "Physics",
+                                size: 28*2,
+                                font: "Arial",
+                                //bold: true,
+                            }),
+
+                        ],
+                    }),
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            after: 240,  // space after paragraph
+                        },
+
+                        children: [
+                            new docx.TextRun({
+                                text: "Question and Answer Book",
+                                size: 19.5*2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+                    
+                    
+                    new docx.Paragraph({
+                        children: [
+                            new docx.TextRun({
+                                text: `VCE Examination – ${date.day} ${date.dateNumber} ${date.month} ${date.year}`,
+                                size: 14.5*2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    //Horizontal Line
+                    new docx.Paragraph({
+                        border: {
+                            bottom: {
+                                style: docx.BorderStyle.SINGLE,
+                                size: 6*2,
+                                color: "000000",
+                            },
+                        },
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 240,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Reading time is `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                            new docx.TextRun({
+                                text: `15 minutes`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                            new docx.TextRun({
+                                text: `: 9:00 am to 9:15 am`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Writing time is `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                            new docx.TextRun({
+                                text: `2 hours and 30 minutes`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+
+                            new docx.TextRun({
+                                text: `: 9:15 am to 11:45 am`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space after paragraph
+                        },
+
+                        children: [
+                            new docx.TextRun({
+                                text: "Approved Materials",
+                                size: 12.5*2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `One scientific calculator`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Pre-written notes (one folded A3 sheet or two A4 sheets bounded together by tape)`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space after paragraph
+                        },
+
+                        children: [
+                            new docx.TextRun({
+                                text: "Materials Supplied",
+                                size: 12.5*2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Question and Answer Book of ${totalPages} pages`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Formula Sheet`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Multiple-Choice Answer Sheet`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space after paragraph
+                        },
+
+                        children: [
+                            new docx.TextRun({
+                                text: "Instructions",
+                                size: 12.5*2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Follow the instructions on the Multiple-Choice Answer Sheet.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `At the end of the examination, place the Multiple-Choice Answer Sheet inside the front cover of this book.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({
+                                text: `Students are `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                            new docx.TextRun({
+                                text: `not`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                            new docx.TextRun({
+                                text: ` permitted to bring mobile phones and/or any unauthorised electronic devices into the examination room.`,                          size: 11 * 2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    //Horizontal Line
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 180,  // space before paragraph
+                        },
+                        border: {
+                            bottom: {
+                                style: docx.BorderStyle.SINGLE,
+                                size: 6*2,
+                                color: "000000",
+                            },
+                        },
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 240,  // space after paragraph
+                        },
+                        tabStops: [
+                            {
+                                type: docx.TabStopType.RIGHT,
+                                position: 9020, // near right margin (twips)
+                            },
+                        ],
+
+                        children: [
+                            new docx.TextRun({
+                                text: "Contents",
+                                size: 12.5*2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                            new docx.TextRun({
+                                text: "\t",
+                                size: 12.5*2,
+                                font: "Arial",
+                            }),
+                            new docx.TextRun({
+                                text: "pages",
+                                size: 11*2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({
+                                text: `Section A`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            new docx.TextRun({
+                                text: ` (${mcNumQs} questions, ${mcNumQs} marks) ________________________________________ 2–${mcTotalPages} `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                            
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({
+                                text: `Section B`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            new docx.TextRun({
+                                text: ` (${erNumQs} questions, ${erMarksTotal} marks) ______________________________________ ${mcTotalPages+1}–${totalPages} `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                            
+                        ],
+                    }),
+                    
+                ],
+            },
+            
+            
+            //New Section - Section A
+            {
+                properties: {
+                    page: {
+                        margin: {
+                            top: 0,
+                            right: 1000,
+                            bottom: 0,
+                            left: 1000,
+                        },
+                    },
+                },
+                headers: {
+                    even: new Header({
+                    children: [
+                        new docx.Paragraph({
+                            tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                            spacing: {
+                                line: 300,
+                                lineRule: LineRuleType.AUTO,
+                            },
+                            border: {
+                                bottom: {
+                                    style: docx.BorderStyle.SINGLE,
+                                    size: 6,
+                                    color: "000000",
+                                },
+                            },
+                            children: [
+                                new docx.TextRun({
+                                    children: ["Page ", docx.PageNumber.CURRENT, ` of ${totalPages}`, totalPages],//docx.PageNumber.TOTAL_PAGES],
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    
+                                }),
+                                new docx.TextRun({
+                                    text: `\tSection A`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    bold: true,
+                                }),
+                                new docx.TextRun({
+                                    text: ` ${date.year} VCE Physics`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                }),
+                            ],
+                        }),    
+                    ],
+                    }),
+                    default: new Header({
+                        children: [
+                            new docx.Paragraph({
+                                tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                                spacing: {
+                                    line: 300,
+                                    lineRule: LineRuleType.AUTO,
+                                },
+                                border: {
+                                    bottom: {
+                                        style: docx.BorderStyle.SINGLE,
+                                        size: 6,
+                                        color: "000000",
+                                    },
+                                },
+                                children: [
+                                    new docx.TextRun({
+                                        text: ` ${date.year} VCE Physics `,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                    }),
+                                    new docx.TextRun({
+                                        text: `Section A`,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                        bold: true,
+                                    }),
+                                    new docx.TextRun({
+                                        children: ["\tPage ", docx.PageNumber.CURRENT, ` of ${totalPages}`, totalPages],//docx.PageNumber.TOTAL_PAGES],
+                                        size: 10 * 2,
+                                        font: "Arial",    
+                                    }), 
+                                ],
+                            }),    
+                        ],
+                    }),
+                },
+                children: [
+                    //buildParagraphsFromMixedContent("<b>Hello there!</b>", docx),
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 240,  // space before paragraph
+                            after: 240,  // space after paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({
+                                text: `Section A`,
+                                size: 15 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            new docx.TextRun({
+                                text: ` - Multiple-choice questions`,
+                                size: 15 * 2,
+                                font: "Arial",
+                            }),
+                            
+                        ],
+                    }),
+
+                    new docx.Paragraph({    
+                        children: [
+                            new docx.TextRun({
+                                text: `Instructions`,
+                                size: 12.5 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            
+                        ],
+                    }),
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Answer `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `all`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` questions in pencil on the Multiple-Choice Answer Sheet.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Choose the answer that is `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `correct`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` or that `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            
+                            new docx.TextRun({
+                                text: `best answers`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                            
+                            new docx.TextRun({
+                                text: ` the question. `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `A correct answer scores 1; an incorrect answer scores 0.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Marks will  `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `not`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` be deducted for incorrect answers.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `No marks will be given if more than one answer is completed for any question.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Unless otherwise indicated, the diagrams in this book are `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `not`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` drawn to scale.`, 
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 180,  // space before paragraph
+                        },
+                        border: {
+                            bottom: {
+                                style: docx.BorderStyle.SINGLE,
+                                size: 6*2,
+                                color: "000000",
+                            },
+                        },
+                    }),
+
+                    ...mcParaArray
+                                        
+                ],
+            },
+            
+            //Section B
+            {
+                properties: {
+                    page: {
+                        margin: {
+                            top: 0,
+                            right: 1000,
+                            bottom: 0,
+                            left: 1000,
+                        },
+                    },
+                },
+                headers: {
+                    even: new Header({
+                    children: [
+                        new docx.Paragraph({
+                            tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                            spacing: {
+                                line: 300,
+                                lineRule: LineRuleType.AUTO,
+                            },
+                            border: {
+                                bottom: {
+                                    style: docx.BorderStyle.SINGLE,
+                                    size: 6,
+                                    color: "000000",
+                                },
+                            },
+                            children: [
+                                new docx.TextRun({
+                                    children: ["Page ", docx.PageNumber.CURRENT, " of ", totalPages],//docx.PageNumber.TOTAL_PAGES],
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    
+                                }),
+                                new docx.TextRun({
+                                    text: `\tSection B`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    bold: true,
+                                }),
+                                new docx.TextRun({
+                                    text: ` ${date.year} VCE Physics`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                }),
+                            ],
+                        }),    
+                    ],
+                    }),
+                    default: new Header({
+                        children: [
+                            new docx.Paragraph({
+                                tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                                spacing: {
+                                    line: 300,
+                                    lineRule: LineRuleType.AUTO,
+                                },
+                                border: {
+                                    bottom: {
+                                        style: docx.BorderStyle.SINGLE,
+                                        size: 6,
+                                        color: "000000",
+                                    },
+                                },
+                                children: [
+                                    new docx.TextRun({
+                                        text: ` ${date.year} VCE Physics `,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                    }),
+                                    new docx.TextRun({
+                                        text: `Section B`,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                        bold: true,
+                                    }),
+                                    new docx.TextRun({
+                                        children: ["\tPage ", docx.PageNumber.CURRENT, " of ", totalPages],//docx.PageNumber.TOTAL_PAGES],
+                                        size: 10 * 2,
+                                        font: "Arial",    
+                                    }), 
+                                ],
+                            }),    
+                        ],
+                    }),
+                },
+                children: [
+                    //buildParagraphsFromMixedContent("<b>Hello there!</b>", docx),
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 240,  // space before paragraph
+                            after: 240,  // space after paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({
+                                text: `Section B`,
+                                size: 15 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            // new docx.TextRun({
+                            //     text: ` - Multiple-choice questions`,
+                            //     size: 15 * 2,
+                            //     font: "Arial",
+                            // }),
+                            
+                        ],
+                    }),
+
+                    new docx.Paragraph({    
+                        children: [
+                            new docx.TextRun({
+                                text: `Instructions`,
+                                size: 12.5 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),  
+                            
+                        ],
+                    }),
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Answer `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `all`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` questions in the spaces provided.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Write your responses in English.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            // new docx.TextRun({
+                            //     text: `correct`,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            //     bold: true,
+                            // }), 
+                            // new docx.TextRun({
+                            //     text: ` or that `,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            // }), 
+                            
+                            // new docx.TextRun({
+                            //     text: `best answers`,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            //     bold: true,
+                            // }),
+                            
+                            // new docx.TextRun({
+                            //     text: ` the question. `,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            // }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Where an answer box has been provided, write your final answer in the box.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `If an answer has box has a unit printed in it, give your answer in that unit.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            // new docx.TextRun({
+                            //     text: `not`,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            //     bold: true,
+                            // }), 
+                            // new docx.TextRun({
+                            //     text: ` be deducted for incorrect answers.`,
+                            //     size: 11 * 2,
+                            //     font: "Arial",
+                            // }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `In questions where more than one mark is available, appropriate working `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `must`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }),
+                            new docx.TextRun({
+                                text: ` be shown.`,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        numbering: {
+                            reference: "bullet-list",
+                            level: 0,
+                        },
+                        children: [
+                            new docx.TextRun({
+                                text: `Unless otherwise indicated, the diagrams in this book are `,
+                                size: 11 * 2,
+                                font: "Arial",
+                            }), 
+                            new docx.TextRun({
+                                text: `not`,
+                                size: 11 * 2,
+                                font: "Arial",
+                                bold: true,
+                            }), 
+                            new docx.TextRun({
+                                text: ` drawn to scale.`, 
+                                size: 11 * 2,
+                                font: "Arial",
+                            }),  
+                        ],
+                    }),
+                    
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 180,  // space before paragraph
+                        },
+                        border: {
+                            bottom: {
+                                style: docx.BorderStyle.SINGLE,
+                                size: 6*2,
+                                color: "000000",
+                            },
+                        },
+                    }),
+
+                    ...erParaArray,
+
+                    // new docx.Paragraph({
+                    //     spacing: {
+                    //         before: 180,  // space before paragraph
+                    //     },
+                    //     alignment: docx.AlignmentType.RIGHT,
+                    //     border: {
+                    //         top: {
+                    //             style: docx.BorderStyle.SINGLE,
+                    //             size: 6*2,
+                    //             color: "000000",
+                    //         },
+                    //     },
+                    //     children: [
+                    //         new docx.TextRun({
+                    //             text: `End of Question and Answer Book`,
+                    //             size: 11 * 2,
+                    //             font: "Arial",
+                    //             bold: true,
+                    //         }),  
+                    //     ],
+                    // }),  
+
+                    new docx.Paragraph({ 
+                        //pageBreakBefore: true,
+                        spacing: {
+                            before: 480,  // space before paragraph
+                            line: 1,
+                        },
+                    }),
+                    new docx.Table({
+                        alignment: docx.AlignmentType.RIGHT,
+                        borders: {
+                            top: { style: docx.BorderStyle.NONE },
+                            bottom: { style: docx.BorderStyle.NONE },
+                            left: { style: docx.BorderStyle.NONE },
+                            right: { style: docx.BorderStyle.NONE },
+                            insideHorizontal: { style: docx.BorderStyle.NONE },
+                            insideVertical: { style: docx.BorderStyle.NONE },
+                        },
+                        width: {
+                            size: 0,
+                            type: docx.WidthType.AUTO, // shrink to content
+                        },
+                        rows: [
+                            new docx.TableRow({
+                            children: [
+                                new docx.TableCell({
+                                borders: {
+                                    top: {
+                                    style: docx.BorderStyle.SINGLE,
+                                    size: 12, // 6*2
+                                    color: "000000",
+                                    },
+                                    bottom: { style: "NONE" },
+                                    left: { style: "NONE" },
+                                    right: { style: "NONE" },
+                                },
+                                margins: {
+                                    top: 100,
+                                    bottom: 0,
+                                    left: 0,
+                                    right: 0,
+                                },
+                                children: [
+                                    new docx.Paragraph({
+                                    alignment: docx.AlignmentType.RIGHT,
+                                    children: [
+                                        new docx.TextRun({
+                                        text: "End of Question and Answer Book",
+                                        size: 11 * 2,
+                                        font: "Arial",
+                                        bold: true,
+                                        }),
+                                    ],
+                                    }),
+                                ],
+                                }),
+                            ],
+                            }),
+                        ],
+                    }),                        
+                ],
+            },
+
+            //Suggested Solutions / Answers
+            {
+                properties: {
+                    page: {
+                        margin: {
+                            top: 0,
+                            right: 1000,
+                            bottom: 0,
+                            left: 1000,
+                        },
+                    },
+                },
+                headers: {
+                    even: new Header({
+                    children: [
+                        new docx.Paragraph({
+                            tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                            spacing: {
+                                line: 300,
+                                lineRule: LineRuleType.AUTO,
+                            },
+                            border: {
+                                bottom: {
+                                    style: docx.BorderStyle.SINGLE,
+                                    size: 6,
+                                    color: "000000",
+                                },
+                            },
+                            children: [
+                                new docx.TextRun({
+                                    children: ["Page ", docx.PageNumber.CURRENT, " of ", docx.PageNumber.TOTAL_PAGES],
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    
+                                }),
+                                new docx.TextRun({
+                                    text: `\tSolutions`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                    bold: true,
+                                }),
+                                new docx.TextRun({
+                                    text: ` ${date.year} VCE Physics`,
+                                    size: 10 * 2,
+                                    font: "Arial",
+                                }),
+                            ],
+                        }),    
+                    ],
+                    }),
+                    default: new Header({
+                        children: [
+                            new docx.Paragraph({
+                                tabStops: [{ type: docx.TabStopType.RIGHT, position: docx.TabStopPosition.MAX + 1000 }],
+                                spacing: {
+                                    line: 300,
+                                    lineRule: LineRuleType.AUTO,
+                                },
+                                border: {
+                                    bottom: {
+                                        style: docx.BorderStyle.SINGLE,
+                                        size: 6,
+                                        color: "000000",
+                                    },
+                                },
+                                children: [
+                                    new docx.TextRun({
+                                        text: ` ${date.year} VCE Physics`,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                    }),
+                                    new docx.TextRun({
+                                        text: ` Soutions`,
+                                        size: 10 * 2,
+                                        font: "Arial",
+                                        bold: true,
+                                    }),
+                                    new docx.TextRun({
+                                        children: ["\tPage ", docx.PageNumber.CURRENT, " of ", docx.PageNumber.TOTAL_PAGES],
+                                        size: 10 * 2,
+                                        font: "Arial",    
+                                    }), 
+                                ],
+                            }),    
+                        ],
+                    }),
+                },
+
+                children: [
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({ 
+                                text: `Suggested Solutions `,
+                                size: 15 * 2,
+                                font: "Arial",
+                                bold: true
+                            }), 
+                        ],
+                    }),
+
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({ 
+                                text: `Section A - Multiple Choice`,
+                                size: 13 * 2,
+                                font: "Arial",
+                                bold: true
+                            }), 
+                        ],
+                    }),
+                    
+                    ...mcSolArray,
+                   
+                    new docx.Paragraph({
+                        spacing: {
+                            before: 120,  // space before paragraph
+                        },
+                        
+                        children: [
+                            new docx.TextRun({ 
+                                text: `Section B`,
+                                size: 13 * 2,
+                                font: "Arial",
+                                bold: true
+                            }), 
+                        ],
+                    }),
+                    ...erSolArray,
+
+
+                    // new docx.Paragraph({
+                    //     children: [
+                    //         new docx.Math({
+                    //             children: [
+                    //                 new docx.MathSum({
+                    //                     children: [new docx.MathRun("test")],
+                    //                 }),
+                    //                 new docx.MathSum({
+                    //                     children: [
+                    //                         new docx.MathSuperScript({
+                    //                             children: [new docx.MathRun("e")],
+                    //                             superScript: [new docx.MathRun("2")],
+                    //                         }),
+                    //                     ],
+                    //                     subScript: [new docx.MathRun("i")],
+                    //                 }),
+                    //                 new docx.MathSum({
+                    //                     children: [
+                    //                         new docx.MathRadical({
+                    //                             children: [new docx.MathRun("i")],
+                    //                         }),
+                    //                     ],
+                    //                     subScript: [new docx.MathRun("i")],
+                    //                     superScript: [new docx.MathRun("10")],
+                    //                 }),
+                    //             ],
+                    //         }),
+                    //     ],
+                    // }),
+
+
+                ],    
+            }
+
+
+
+            ],
+            
+            });
+
+            docx.Packer.toBlob(doc).then(blob => {
+            saveAs(blob, `Physics Examination - ${date.day} ${date.dateNumber} ${date.month} ${date.year}.docx`);
+            console.log("Document created successfully");
+           
+            });
+    });
+}
+
+function makeMCString(MCArray){
+   
+    let mcString =``;
+    let pagePortion = 0;
+    
+    if(MCArray.length>1){
+        pagePortion = 400;
+    }
+    
+    
+    for (let n=0;n<MCArray.length;n++){
+        
+        //Add new page if page portion will exceed 1500
+        let questionPagePortion = Number(MCArray[n].pagePortion);
+        
+        if (questionPagePortion + pagePortion>1500){
+            //add new page
+            mcString += `
+                </div></div>
+                    <div class="page" style="margin-top: 5px;  min-height: 500px; border:1px solid black; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                        <div class="page-container" style="padding:20px 20px;">
+            `;
+            pagePortion = 0;
+        }
+        else {
+            pagePortion = questionPagePortion + pagePortion
+        }
+
+        mcString += `<br>`;
+        
+        //Insert Variables "[A]"" into textFirst
+        MCArray[n] = replaceVariableValues(MCArray[n]);
+        
+        //replace variables in answers and then eval for multiple choice answers
+        MCArray[n] = evaluates(MCArray[n]);
+
+        //create a function to display equations
+        MCArray[n] = displayEquation(MCArray[n]);
+
+        
+        //Insert Question Label
+        mcString += `<div style="margin-left: 10px; font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>Question ${n+1}</b></div>`;
+        //Insert Text First
+        mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${MCArray[n].textFirst}</div>`;
+        //Insert Image if there is one
+        if (MCArray[n]['image']['path']){
+            let pathArray = MCArray[n]['image']['path'].split(".");
+            let path = pathArray[0] + "-1000.png";
+            
+            mcString += `<div style="display:flex; justify-content:center;"><img src="${path}" style="max-width:100%; object-fit: scale-down;" /></div>`;
+        }
+        //Insert Text Second if there is one.
+        if (MCArray[n]['textSecond']){
+            mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${MCArray[n]['textSecond']}</div>`;
+        }
+        
+        //Determine how to display answers - plain text, table, images, 2colimages, equations (should work through plan text)
+        let displayAnswers = "plainText";
+       
+        if (MCArray[n].choices.table){
+            displayAnswers = "table";
+        }
+        else if (MCArray[n].choices.layout){
+            displayAnswers = "2col";
+        }
+        else if (MCArray[n].choices.image){
+            displayAnswers = "image";
+        }
+            
+        //Insert Text Answers
+        if (displayAnswers == "plainText"){
+            mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>A.</b>   ${MCArray[n].choices.text.text1}</div>`;
+            mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>B.</b>   ${MCArray[n].choices.text.text2}</div>`;
+            mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>C.</b>   ${MCArray[n].choices.text.text3}</div>`;
+            mcString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>D.</b>   ${MCArray[n].choices.text.text4}<br/><br/></div>`;
+        }
+
+        //Insert 2 Column Images
+        if (displayAnswers == "2col"){
+            let pathArray1 = MCArray[n]['choices']['image'][0]['path'].split(".");
+            let pathArray2 = MCArray[n]['choices']['image'][1]['path'].split(".");
+            let pathArray3 = MCArray[n]['choices']['image'][2]['path'].split(".");
+            let pathArray4 = MCArray[n]['choices']['image'][3]['path'].split(".");
+            
+            let path1 = pathArray1[0] + "-500.png";
+            let path2 = pathArray2[0] + "-500.png";
+            let path3 = pathArray3[0] + "-500.png";
+            let path4 = pathArray4[0] + "-500.png";
+            
+            mcString += 
+            `
+            <div style="display:flex;">
+                <div>
+                    <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>A.</b></div>
+                    <div><img src="${path1}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                </div>
+                <div>
+                    <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>B.</b></div>
+                    <div><img src="${path2}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                </div>
+            </div>
+            <div style="display:flex;">
+                <div>
+                    <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>C.</b></div>
+                    <div><img src="${path3}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                </div>
+                <div>
+                    <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>D.</b></div>
+                    <div><img src="${path4}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                </div>
+            </div>
+            `;
+        }
+
+        //Insert images single column
+        if (displayAnswers == "image"){
+            let pathArray1 = MCArray[n]['choices']['image'][0]['path'].split(".");
+            let pathArray2 = MCArray[n]['choices']['image'][1]['path'].split(".");
+            let pathArray3 = MCArray[n]['choices']['image'][2]['path'].split(".");
+            let pathArray4 = MCArray[n]['choices']['image'][3]['path'].split(".");
+            
+            let path1 = pathArray1[0] + "-1000.png";
+            let path2 = pathArray2[0] + "-1000.png";
+            let path3 = pathArray3[0] + "-1000.png";
+            let path4 = pathArray4[0] + "-1000.png";
+            mcString += `
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>A.</b></div>
+                <div><img src="${path1}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>B.</b></div>
+                <div><img src="${path2}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>C.</b></div>
+                <div><img src="${path3}" style="max-width:100%; object-fit: scale-down;" /> </div>
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>D.</b></div>
+                <div><img src="${path4}" style="max-width:100%; object-fit: scale-down;" /> </div>
+            `;
+        }
+
+        //Insert MC Table
+        if (displayAnswers == "table"){
+            let tableHeaderString = "<tr><th></th>";
+
+            for (let p=1; p<MCArray[n].choices.table.headers.length; p++){
+                tableHeaderString += `<th style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;border: 1px solid black; border-collapse: collapse; padding:3px 5px; text-align: center;">${MCArray[n].choices.table.headers[p]}</th>`;
+            }
+
+            let tablerow1 = "<tr><td><b>A.</b> &nbsp</td>";
+            let tablerow2 = "<tr><td><b>B.</b> &nbsp</td>";
+            let tablerow3 = "<tr><td><b>C.</b> &nbsp</td>";
+            let tablerow4 = "<tr><td><b>D.</b> &nbsp</td>";
+
+            for (let p=0; p<MCArray[n].choices.text.text1.length; p++){
+                tablerow1 += `<td style="border: 1px solid black; border-collapse: collapse; padding:3px 5px; text-align: center;">${MCArray[n].choices.text.text1[p]}</td>`;
+                tablerow2 += `<td style="border: 1px solid black; border-collapse: collapse; padding:3px 5px; text-align: center;"">${MCArray[n].choices.text.text2[p]}</td>`;
+                tablerow3 += `<td style="border: 1px solid black; border-collapse: collapse; padding:3px 5px; text-align: center;"">${MCArray[n].choices.text.text3[p]}</td>`;
+                tablerow4 += `<td style="border: 1px solid black; border-collapse: collapse; padding:3px 5px; text-align: center;"">${MCArray[n].choices.text.text4[p]}</td>`;
+            }
+            
+            tableHeaderString += "</tr>";
+            tablerow1 += "</tr>";
+            tablerow2 += "</tr>";
+            tablerow3 += "</tr>";
+            tablerow4 += "</tr>";
+            
+            mcString += `
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">
+                    <table style=" border-collapse: collapse;">
+                        ${tableHeaderString}
+                        ${tablerow1}
+                        ${tablerow2}
+                        ${tablerow3}
+                        ${tablerow4}
+                    </table>
+                </div>
+            `;
+        }
+    }
+    return mcString;
+}
+
+function makeERString(ERArray){
+    const partsLabelArray = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n"];
+    const subPartsLabelArray = ["i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv"];
+    let erString = `<br>`;
+    
+    for (let n=0; n<ERArray.length; n++){
+        
+        //Insert Variables "[A]"" into textFirst
+        ERArray[n] = replaceVariableValues(ERArray[n]);
+
+        //Display Equations with mathJax
+        ERArray[n] = displayEquation(ERArray[n]);
+
+
+        //add up total marks from question, parts and subparts
+        let marksT = 0;
+        let marksString = "";
+        if (ERArray[n].marksTotal){
+            marksT = Number(ERArray[n].marksTotal);
+        }
+        else {
+            for (let p=0; p<ERArray[n].parts.length; p++){
+                for (let s=0; s<ERArray[n].parts[p].subParts.length; s++){
+                    marksT = marksT + Number(ERArray[n].parts[p].subParts[s].marks);
+                }
+                marksT = marksT + Number(ERArray[n].parts[p].marks);
+            }
+        }
+        
+        if (marksT == 1){
+            marksString = "1 mark";
+        }
+        else {
+            marksString = marksT.toString() + " marks";
+        }
+        
+        //Insert new page if not the first page
+        if (n>0){
+            
+            erString += `
+                </div></div>
+                    <div class="page" style="margin-top: 5px; min-height: 500px; border:1px solid black; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                        <div class="page-container" style="padding:20px 20px;">
+            `;
+        }
+
+        //Insert Question Label
+        erString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;"><b>Question ${n+1}</b> (${marksString})</div>`;
+        //Insert Text First
+        erString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${ERArray[n].textFirst}</div>`;
+        //Insert Image if there is one
+        if (ERArray[n]['image']['path']){
+            let pathArrayER = ERArray[n]['image']['path'].split(".");
+            let path = pathArrayER[0] + "-1000.png";
+            erString += `<div style="display:flex; justify-content:center;"><img src="${path}" style="max-width:100%; object-fit: scale-down;" /></div>`;
+        }
+
+        //Insert table if there is one. 
+        
+        if (!isEmpty(ERArray[n].table))
+        {
+            let tableStr = "<table style='margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px; border: 1px solid black; border-collapse: collapse; margin:15px auto'>";
+            for (let t=0; t<ERArray[n].table.columnArray.length; t++){
+                tableStr += `<tr>`;
+                for (let c=0; c<ERArray[n].table.columnArray[t].length; c++){
+                    ERArray[n].table.columnArray[t][c] = ERArray[n].table.columnArray[t][c].replace(/\<equ>/g,"\\(");
+                    ERArray[n].table.columnArray[t][c] = ERArray[n].table.columnArray[t][c].replace(/<\/equ>/g,"\\)");
+                    tableStr += `<td style="border: 1px solid black; border-collapse: collapse; width: ${Number(ERArray[n].table.cellWidth)/20}px; text-align: center;">${ERArray[n].table.columnArray[t][c]}</td>`
+                }
+                tableStr += `</tr>`;
+            }
+            tableStr += "</table>";
+            erString += tableStr;
+        }
+
+        //Insert Text Second if there is one.
+        if (ERArray[n]['textSecond']){
+            erString += `<div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${ERArray[n]['textSecond']}</div>`;
+        }
+        
+        //Add lines for questions with no parts
+        if (ERArray[n].marksTotal){
+            for (let p=0; p<Number(ERArray[n].lines); p++){
+                erString +=`<div class = "lines" style="margin-left: 10px;font-size:12px;"><div><hr style="margin-top:18px;"></div></div>`;
+            }
+        }
+        //Insert Answer Box for question with no parts
+        if (ERArray[n].answerBox == "true") {
+            erString +=`<div class = "answerBox" style="font-size:10px; border: 1px solid black; width: 80px; padding: 7px 2px; margin-top: 15px; text-align: right; min-height: 14px;">${ERArray[n].units}</div>`;
+        }
+
+        //Add questions parts and subparts label and first text and lines.
+        if (ERArray[n].parts){
+            
+            
+            for (let p=0; p<ERArray[n].parts.length; p++){
+                ////insert subparts labels, text and lines if there are any.
+                if(ERArray[n].parts[p].subParts.length){
+                    for (let s=0; s<ERArray[n].parts[p].subParts.length; s++){
+                        if(ERArray[n].parts[p].textFirst && s==0){
+                            erString += `<br>
+                            <div style="display:flex; justify-content:space-between;">
+                                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;font-size:12px; width: 80%; margin-left: 25px; text-indent:-18px;"><b>${partsLabelArray[p]}.</b> &nbsp; ${ERArray[n].parts[p].textFirst}</div>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <div style="font-family: 'Arial', Helvetica, sans-serif;font-size:12px; width: 80%; margin-left: 25px; text-indent:-18px;"><b>${subPartsLabelArray[s]}.</b> &nbsp; ${ERArray[n].parts[p].subParts[s].textFirst}</div>
+                                <div style="font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${ERArray[n].parts[p].subParts[s].marks} ${ERArray[n].parts[p].marks == "1" ? " mark" : " marks"}</div>
+                            </div>
+                            `;
+                        }
+                        else{
+                            erString += `<br>
+                            <div style="display:flex; justify-content:space-between;">
+                                <div style="font-family: 'Arial', Helvetica, sans-serif;font-size:12px; width: 80%; margin-left: 38px; text-indent:-30px;"><b>${s==0 ? partsLabelArray[p] : '&nbsp;'}.</b> &nbsp;<b>${subPartsLabelArray[s]}.</b> &nbsp; ${ERArray[n].parts[p].subParts[s].textFirst}</div>
+                                <div style="font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${ERArray[n].parts[p].subParts[s].marks} ${ERArray[n].parts[p].subParts[s].marks == "1" ? " mark" : " marks"}</div>
+                            </div>
+                            `;
+                        }
+
+                        //insert image for subPart if there is one. 
+                        if (ERArray[n].parts[p].subParts[s].image){
+                            let pathArrayER = ERArray[n].parts[p].subParts[s]['image']['path'].split(".");
+                            let path = pathArrayER[0] + "-1000.png";
+                            erString += `<div style="display:flex; justify-content:center;"><img src="${path}" style="max-width:100%; object-fit: scale-down;" /></div>`;
+                        }
+
+                         //insert lines for each part
+                        for (let lines=0; lines<Number(ERArray[n].parts[p].subParts[s].lines); lines++){
+                            erString +=`<div class="lines" style="font-size:12px;"><div><hr style="margin-top:18px; margin-left: 38px; width: 80%;"></div></div>`;
+                        }
+                        //Insert Answer Box
+                        if (ERArray[n].parts[p].subParts[s].answerBox == "true") {
+                            erString +=`<div class = "answerBox" style="font-size:10px; border: 1px solid black; width: 100px; padding: 7px 2px; margin-top: 18px; text-align: right;  margin-left: 38px; min-height: 14px;">${ERArray[n].parts[p].subParts[s].units}</div>`;
+                        }
+                    }
+                }
+                
+                else {
+                    //Insert berfore text if there is any. 
+                    if (ERArray[n].parts[p].beforeText){
+                        erString += `<div style="margin-left: 10px; font-family: 'Arial', Helvetica, sans-serif;font-size:12px; margin-top: 15px;">${ERArray[n].parts[p].beforeText}</div>`;
+                    }
+                    
+                    //insert parts labels, text and lines if there are no sub parts.
+                    erString += `<br>
+                            <div style="display:flex; justify-content:space-between;">
+                                <div style="font-family: 'Arial', Helvetica, sans-serif;font-size:12px; width: 80%; margin-left: 25px; text-indent:-18px;"><b>${partsLabelArray[p]}.</b> &nbsp; ${ERArray[n].parts[p].textFirst}</div>
+                                <div style="margin-left: 10px; font-family: 'Arial', Helvetica, sans-serif;font-size:12px;">${ERArray[n].parts[p].marks} ${ERArray[n].parts[p].marks == "1" ? " mark" : " marks"}</div>
+                            </div>
+                        `;
+
+                    //insert image for part if there is one. 
+                    if (ERArray[n].parts[p].image){
+                        let pathArrayER = ERArray[n].parts[p]['image']['path'].split(".");
+                        let path = pathArrayER[0] + "-1000.png";
+                        erString += `<div style="display:flex; justify-content:center;"><img src="${path}" style="max-width:100%; object-fit: scale-down;" /></div>`;
+                    }
+
+                    //insert lines for each part
+                    for (let lines=0; lines<Number(ERArray[n].parts[p].lines); lines++){
+                        erString +=`<div class= "lines" style="font-size:12px;"><div><hr style="margin-top:18px; margin-left: 25px; width: 80%;"></div></div>`;
+                    }
+                    
+                    //Insert Answer Box
+                    if (ERArray[n].parts[p].answerBox == "true") {
+                        erString +=`<div class = "answerBox"; style="font-size:10px; border: 1px solid black; width: 100px; padding: 7px 2px; margin-top: 18px; text-align: right;  margin-left: 25px; min-height: 14px;">${ERArray[n].parts[p].units}</div>`;
+                    }
+                }     
+            }
+        }
+
+    }
+
+    return erString;
+}
+//Preview Examm Question Questions in sidebar4
+function PreviewExam(selectedQuestions,data){
+    
+    //Get Todays Date
+    const date = getTodaysDate();
+    //Get Question ids
+    const idMC = getIDs(selectedQuestions,"MC");
+    const idER = getIDs(selectedQuestions,"ER");
+    //Get Array of MC and ER questions.
+    const MCArray = getQuestionArray(data,idMC);
+    const ERArray = getQuestionArray(data,idER);
+    //Get marks totals
+    const MCMarks = MCArray.length;
+    const ERMarks = getERMarks(ERArray);
+    //Update marks totals on screen
+    updateMarksTotals(MCMarks, ERMarks);
+    //Build MC Preview HTMLString
+    const mcString = makeMCString(MCArray);
+    //Build ER Preview String
+    const erString = makeERString(ERArray);
+
+
+    //Format front page of exam for preview screen
+    let str = `
+    <div class="preview-container" style="padding:0px 20px;">
+        <div class="page" style="border:1px solid black; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+            <div class="page-container" style="padding:20px 20px;">
+                
+                <div class="name-parent" style="text-align: right; padding: 20px; font-family: 'Arial', Helvetica, sans-serif; font-size:14px; margin-top:5px; gap:20px;">
+                    <div style="margin: 10px;"><b>Student Name: _______________</b></div>
+                    <div style="margin: 10px;"><b>Teacher Name: _______________</b></div>
+                </div>
+                
+                <div class="title-parent" style="border-bottom: 2px solid black; margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:24px; margin-top:10px;">
+                    <div>Physics</div>
+                    <div style="margin-top: 8px; font-size: 18px;">Question and Answer Book</div>
+                    <div style="margin-bottom: 5px; margin-top: 10px;font-size: 14px;">VCE Examination – ${date.day} ${date.dateNumber} ${date.month} ${date.year} </div>
+                </div>
+                
+                <div style="margin-left: 20px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:10px;">
+                    <ul>
+                        <li style="margin-top: 5px;">
+                            Reading time is <b>15 minutes</b>: 9:00 am to 9:15 am
+                        </li>
+                        <li style="margin-top: 5px;">
+                            Writing time is <b>2 hours and 30 minutes</b>: 9:15 am to 11:45 am
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:14px; margin-top:10px;">
+                    <b>Approved Materials</b>
+                </div>
+
+                <div style="margin-left: 20px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:5px;">
+                    <ul>
+                        <li style="margin-top: 5px;">
+                            One scientific calculator
+                        </li>
+                        <li style="margin-top: 5px;">
+                           Pre-written notes (one folded A3 sheet or two A4 sheets bounded together by tape)
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:14px; margin-top:10px;">
+                    <b>Materials Supplied</b>
+                </div>
+
+                <div style="margin-left: 20px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:5px;">
+                    <ul>
+                        <li style="margin-top: 5px;">
+                            Question and Answer Book of 67 pages
+                        </li>
+                        <li style="margin-top: 5px;">
+                           Formula Sheet
+                        </li>
+                        <li style="margin-top: 5px;">
+                           Multiple-Choice Answer Sheet
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:14px; margin-top:5px;">
+                    <b>Instructions</b>
+                </div>
+
+                <div style="margin-left: 20px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:5px;">
+                    <ul>
+                        <li style="margin-top: 5px;">
+                            Follow the instructions on the Multiple-Choice Answer Sheet.
+                        </li>
+                        <li style="margin-top: 5px;">
+                           At the end of the examination, place the Multiple-Choice Answer Sheet inside the front cover of this book.
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="padding-bottom: 10px; border-bottom: 2px solid black; margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; font-size:12px; margin-top:5px;">
+                    Students are <b>not</b> permitted to bring mobile phones and/or any unauthorised electronic devices into the examination room.
+                </div>
+
+                <div style="margin-top: 10px;margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex;  font-size:14px; margin-top:5px; justify-content: space-between;">
+                    <b>Contents</b>
+                    <div>pages</div>
+                </div>
+
+                <div style="margin-top: 5px;font-size:12px; margin-left: 10px; font-family: 'Arial', Helvetica, sans-serif; display: flex; justify-content: space-between;">
+                    <div><b>Section A</b> (${MCMarks} questions, ${MCMarks} marks)</div>
+                    <div>_________________________________________</div>
+                    <div>2–15</div>
+                </div>
+
+                <div style="margin-bottom: 50px;margin-top: 5px;font-size:12px; margin-left: 10px; font-family: 'Arial', Helvetica, sans-serif; display: flex; justify-content: space-between;">
+                    <div><b>Section B</b> (${ERArray.length} questions, ${ERMarks} marks)</div>
+                    <div>_________________________________________</div>
+                    <div>16–67</div>
+                </div>
+
+            </div>
+        </div>
+        
+        ${ MCArray.length >0 ? `<div class="page" style="margin-top: 5px; min-height: 500px; border:1px solid black; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+        <div class="page-container" style="padding:20px 20px;">
+            <div class="section-title" style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;"><b>Section A</b> - Multiple-choice questions</div>
+            
+            <div style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:14px; margin-top:5px;">
+                <b>Instructions</b>
+            </div>
+
+            <div style="padding-bottom: 10px; border-bottom: 2px solid black; margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:5px;">
+                <ul style="margin-left: 10px;">
+                    <li style="margin-top: 5px;">
+                        Answer all questions in pencil on the Multiple-Choice Answer Sheet.
+                    </li>
+                    <li style="margin-top: 5px;">
+                        Choose the answer that is correct or that best answers the question. 
+                    </li>
+                    <li style="margin-top: 5px;">
+                        A correct answer scores 1; an incorrect answer scores 0.
+                    </li>
+                    <li style="margin-top: 5px;">
+                        Marks will  not be deducted for incorrect answers.
+                    </li>
+                    <li style="margin-top: 5px;">
+                        No marks will be given if more than one answer is completed for any question.
+                    </li>
+                    <li style="margin-top: 5px;">
+                        Unless otherwise indicated, the diagrams in this book are not drawn to scale.
+                    </li>
+                </ul>
+            </div>
+                
+        
+            ${mcString}
+        </div>
+    </div>`: ``}
+
+    ${ERArray.length>0 ? `<div class="page" style="margin-top: 5px; min-height: 500px; border:1px solid black; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+    <div class="page-container" style="padding:20px 20px;">
+        <div class="section-title" style="margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif;"><b>Section B</b></div>
+        
+        
+        <div style="padding-bottom: 10px; border-bottom: 2px solid black; margin-left: 10px;font-family: 'Arial', Helvetica, sans-serif; display:flex; flex-direction: column; font-size:12px; margin-top:5px;">
+            <ul style="margin-left: 10px;">
+                <li style="margin-top: 5px;">
+                    Answer <b>all</b> questions in the spaces provided.
+                </li>
+                <li style="margin-top: 5px;">
+                    Write your responses in English.
+                </li>
+                <li style="margin-top: 5px;">
+                    Where an answer box has been provided, write your final answer in the box.
+                </li>
+                <li style="margin-top: 5px;">
+                   If an answer has box has a unit printed in it, give your answer in that unit.
+                </li>
+                <li style="margin-top: 5px;">
+                   In questions where more than one mark is available, appropriate working <b>must</b> be shown.
+                </li>
+                <li style="margin-top: 5px;">
+                    Unless otherwise indicated, the diagrams in this book are <b>not</b> drawn to scale.
+                </li>
+            </ul>
+        </div>
+
+        ${erString}
+    </div>
+</div>`:``}
+        
+
+    </div>`
+        
+    const preview = document.querySelector(".builder_sidebar4");
+    preview.innerHTML=str;
+    MathJax.typeset();
+}
+
+function getTodaysDate(){
+    const date = new Date();
+    const year = date.getFullYear();
+    const dayNumber = date.getDay();
+    const daysoftheweek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const day = daysoftheweek[dayNumber];
+    const monthNumber =date.getMonth();
+    const monthsoftheyear = ['January','February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const month = monthsoftheyear[monthNumber];
+    const dateNumber = date.getDate();
+
+    const todaysDate = {
+        day: day,
+        month:month,
+        dateNumber: dateNumber,
+        year:year
+    };
+
+    return todaysDate;
+}
+
+function getIDs(selectedQuestions,qtype){
+    const re = new RegExp(qtype);
+    const idMC = Object.values(selectedQuestions)
+        .filter(item => item.outerHTML.search(re)>=0)
+        .map(item => item.innerHTML.split(" ",1)[0]);
+    return idMC;
+}
+
+function getQuestionArray(data, idArray){
+    let questionArray = [];
+    for (let n=0; n<idArray.length; n++){
+        let qid = idArray[n];
+        for (let p=0; p<data.length;p++){
+            if (data[p].id==qid){
+                questionArray.push(data[p]);
+            }
+        }
+    }
+    return questionArray;
+}
+
+function getERMarks(ERArray){
+    let ERMarks = 0;
+    //ERMarks += ERArray[0].parts[0].marks*1;
+    for (let n=0; n<ERArray.length; n++){
+        if (ERArray[n].parts.length==0){
+            ERMarks += ERArray[n].marksTotal*1; 
+        }
+        else {
+            for (let p=0; p<ERArray[n].parts.length; p++){
+                
+                if (ERArray[n].parts[p].subParts.length == 0){
+                    ERMarks += ERArray[n].parts[p].marks*1;
+                }
+                else {
+                    for (let s=0; s<ERArray[n].parts[p].subParts.length; s++){
+                        ERMarks += ERArray[n].parts[p].subParts[s].marks*1;
+                    }
+                }
+                
+            }
+        }
+    }
+    return ERMarks;  
+    
+}
+
+function updateMarksTotals(MCMarks, ERMarks){
+    const MC = document.querySelector(".mcMarks");
+    const ER = document.querySelector(".erMarks");
+    const total = document.querySelector(".totalMarks");
+    MC.innerHTML=MCMarks;
+    ER.innerHTML = ERMarks;
+    total.innerHTML=MCMarks+ERMarks;
+}
+
+function replaceVariableValues(question){
+    if (question.variables){
+        for (let p=0;p<question.variables.length;p++){
+            question.textFirst = question.textFirst.replaceAll(question.variables[p].variable,question.variables[p].stNum); 
+            question.textSecond = question.textSecond.replaceAll(question.variables[p].variable,question.variables[p].stNum);
+
+          
+            //replace for MC Choice Questions Choices Texts
+           if (question.choices){
+            if (question.choices.text && !question.choices.table) {
+                question.choices.text.text1 = question.choices.text.text1.replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                question.choices.text.text2 = question.choices.text.text2.replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                question.choices.text.text3 = question.choices.text.text3.replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                question.choices.text.text4 = question.choices.text.text4.replaceAll(question.variables[p].variable,question.variables[p].stNum);
+            }
+            if (question.choices.text && question.choices.table) {
+                for (let q=0; q<question.choices.text.text1.length; q++){
+                    question.choices.text.text1[q] = question.choices.text.text1[q].replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                    question.choices.text.text2[q] = question.choices.text.text2[q].replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                    question.choices.text.text3[q] = question.choices.text.text3[q].replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                    question.choices.text.text4[q] = question.choices.text.text4[q].replaceAll(question.variables[p].variable,question.variables[p].stNum);
+                }
+            }
+           }
+        } 
+    }
+    return question;
+}
+
+function evaluates(question){
+    //If MC Choices Text, check for <eval> and evaluate where neccessary.
+    
+  
+    if (typeof question.choices.text.text1 == 'string'){
+        
+        const choicesStringArray =[
+            question.choices.text.text1,
+            question.choices.text.text2,
+            question.choices.text.text3,
+            question.choices.text.text4  
+        ];
+        
+        let choicesEvalStartArray = [];
+        let choicesEvalEndArray = [];
+
+        for (let p=0;p<4;p++){
+            const sourceStr = choicesStringArray[p];
+            const searchStr = '<eval>';
+            const evalStart = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(a => a.index + 6);
+            choicesEvalStartArray.push(evalStart);
+            const searchStr2 = '</eval>';
+            const evalEnd = [...sourceStr.matchAll(new RegExp(searchStr2, 'gi'))].map(a => a.index);
+            choicesEvalEndArray.push(evalEnd);
+        }
+      
+        
+        // get the and evaluate substrings
+        let evalStringArray=[];
+        for (let p=0;p<4;p++){
+            let str = choicesStringArray[p];
+            let tempArray = [];
+            for (let q=0; q<choicesEvalStartArray[p].length; q++){
+                let substr = str.substring(choicesEvalStartArray[p][q],choicesEvalEndArray[p][q]);
+                
+                substr = substr.replaceAll(/asin\(/g,"Math.asin(");
+                substr = substr.replaceAll(/acos\(/g,"Math.acos(");
+                substr = substr.replaceAll(/atan\(/g,"Math.atan(");
+                substr = substr.replaceAll(/sqrt\(/g,"Math.sqrt(");
+                substr = substr.replaceAll(/\w*(?<!Math.a)sin\(/g,"Math.sin(");
+                substr = substr.replaceAll(/\w*(?<!Math.a)cos\(/g,"Math.cos(");
+                substr = substr.replaceAll(/\w*(?<!Math.a)tan\(/g,"Math.tan(");
+                substr = substr.replaceAll(/pi\(\)/g,"Math.PI");
+                
+                substr = eval(substr);
+                
+                //round evaluated string to required decimal places
+                let sigfig = parseInt(question.variables[0].sigfig);
+                substr = substr.toPrecision(sigfig);
+                substr = substr.toString()
+
+                //replace with scientific notation eg. 4.7e+2 => 4.7×10<sup>2</sup>
+                if (substr.match("e+") || substr.match("e-")){
+                    substr = substr.replaceAll("e+","×10<sup>");
+                    substr = substr.replaceAll("e","×10<sup>");
+                    substr=substr + "</sup>";
+                }
+
+
+
+                tempArray[q] = substr;
+            }
+            evalStringArray.push(tempArray);
+        }
+
+   
+
+        //Replace evaluated strings in the choices. 
+        for (let p=0;p<4;p++){
+            for (let q=0; q<choicesEvalStartArray[p].length; q++){
+                let replace = choicesStringArray[p].substring(choicesEvalStartArray[p][q],choicesEvalEndArray[p][q]);
+                let replaceWith = evalStringArray[p][q];
+                choicesStringArray[p] = choicesStringArray[p].replaceAll(replace,replaceWith);
+            }
+        } 
+
+        // remove the <eval> and </eval> tags
+        for (let p=0;p<4;p++){
+            let replace = "<eval>";
+            let replaceWith = "";
+            choicesStringArray[p] = choicesStringArray[p].replaceAll(replace,replaceWith);
+
+            replace = "</eval>";
+            replaceWith = "";
+            choicesStringArray[p] = choicesStringArray[p].replaceAll(replace,replaceWith);
+
+            //replace text1 text2 text3 text4 with correct evaluated strings. 
+        }
+        
+        question.choices.text.text1 = choicesStringArray[0];
+        question.choices.text.text2 = choicesStringArray[1];
+        question.choices.text.text3 = choicesStringArray[2];
+        question.choices.text.text4 = choicesStringArray[3];
+    }
+
+    return question
+}
+
+function displayEquation(question){
+   
+    //first text.
+    question.textFirst = question.textFirst.replace(/\<equ>/g,"\\(");
+    question.textFirst = question.textFirst.replace(/<\/equ>/g,"\\)");
+
+    //second text
+    question.textSecond = question.textSecond.replace(/\<equ>/g,"\\(");
+    question.textSecond = question.textSecond.replace(/<\/equ>/g,"\\)");
+
+    //MC texts
+    if (question.style == "MC"){
+        if(typeof question.choices.text.text1 == 'string') {
+            question.choices.text.text1 = question.choices.text.text1.replace(/\<equ>/g,"\\(");
+            question.choices.text.text1 = question.choices.text.text1.replace(/<\/equ>/g,"\\)");
+    
+            question.choices.text.text2 = question.choices.text.text2.replace(/\<equ>/g,"\\(");
+            question.choices.text.text2 = question.choices.text.text2.replace(/<\/equ>/g,"\\)");
+    
+            question.choices.text.text3 = question.choices.text.text3.replace(/\<equ>/g,"\\(");
+            question.choices.text.text3 = question.choices.text.text3.replace(/<\/equ>/g,"\\)");
+    
+            question.choices.text.text4 = question.choices.text.text4.replace(/\<equ>/g,"\\(");
+            question.choices.text.text4 = question.choices.text.text4.replace(/<\/equ>/g,"\\)");
+        }
+    }
+
+    if (question.style == "ER"){
+        for (let p=0; p<question.parts.length; p++){
+           
+            if(question.parts[p].textFirst){
+                question.parts[p].textFirst = question.parts[p].textFirst.replace(/\<equ>/g,"\\(");
+                question.parts[p].textFirst = question.parts[p].textFirst.replace(/<\/equ>/g,"\\)");
+            }
+            for (let s=0; s<question.parts[p].subParts.length; s++){
+                question.parts[p].subParts[s].textFirst = question.parts[p].subParts[s].textFirst.replace(/\<equ>/g,"\\(");
+                question.parts[p].subParts[s].textFirst = question.parts[p].subParts[s].textFirst.replace(/<\/equ>/g,"\\)");
+            }
+        }
+    }
+
+    return question;
+
+}
+
+function isEmpty(obj) {
+    for (const prop in obj) {
+      if (Object.hasOwn(obj, prop)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+
+    </script>
+    <title>Physics Exams</title>
+</head>
+<body>
+   <div class="builder-controls-container">
+	
+	<div class="marksWrap">
+		<div class="marksTitle">Marks</div>
+		<div class="marksRowWrap">
+			<div class="mcMarksTitle marksRow">MC</div>
+			<div class="mcMarks marksRow">0</div>
+			<div class="erMarksTitle marksRow">ER</div>
+			<div class="erMarks marksRow">0</div>
+			<div class="totalMarksTitle marksRow">Total</div>
+			<div class="totalMarks marksRow">0</div>
+		</div>
+	</div>
+	
+	<!-- <div class="optionsAccordionWrap">
+        <div class = "builder-control1 fullBorders">
+            <div class="optionText">Options</div>
+            <div class="optionsIcon"><i class="fas fa-angle-down"></i></div>
+        </div>
+        <div class="optionsAccodionBody">
+            <div class="filterHeading">Filter</div>
+			<div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">Multiple Choice</div>
+                <div class="iconCheckbox"><i class="far fa-check-square fa-3x"></i></div>  
+            </div>
+            <div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">Extended Response</div>
+                <div class="iconCheckbox"><i class="far fa-check-square fa-3x"></i></div>
+			</div>
+			<div class="filterHeading">Numbers</div>
+			<div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">Randomise</div>
+                <div class="iconCheckbox"><i class="far fa-square fa-3x"></i></div>  
+			</div>
+			<div class="filterHeading">Download</div>
+			<div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">Solutions</div>
+                <div class="iconCheckbox"><i class="far fa-check-square fa-3x"></i></div>  
+			</div>
+			<div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">Formula Sheet</div>
+                <div class="iconCheckbox"><i class="far fa-square fa-3x"></i></div>  
+			</div>
+			<div class="optionsCheckWrap">
+                <div class="optionsAccodionBodyText">MC Answer Sheet</div>
+                <div class="iconCheckbox"><i class="far fa-square fa-3x"></i></div>  
+            </div>
+
+        </div>
+    </div> -->
+
+    <div class = "createExamBtn">
+        <div class = "downloadText">Download</div>
+        <div class = "downloadIcon"><i class="fas fa-file-download"></i></div>
+    </div>
+</div>
+
+<div class="builder-headings-container">
+    <div class="heading">Database</div>
+    <div class="heading">Questions</div>
+    <div class="heading">Your Exam</div>
+    <div class="heading4">Preview</div>
+</div>
+
+
+<div class="builder_page">
+    <div class="builder_sidebar1">
+	<div class="accordion_wrap">
+                <!-- <div class="accordion-header-wrap">
+                    <div class="accordion_header">Preset Exams</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+
+                <div class="accordion_body">
+		      		<div class="concept_list presetexam">Exam 1</div>
+						<div class="concept_list presetexam">Exam 2</div>
+						<div class="concept_list presetexam">Exam 3</div>
+						<div class="concept_list presetexam">Exam 4</div>
+						<div class="concept_list presetexam">Exam 5</div>
+						<div class="concept-label">Rearranged Questions</div>
+						<div class="concept_list presetexam">Exam 6</div>
+						<div class="concept_list presetexam">Exam 7</div>
+						<div class="concept_list presetexam">Exam 8</div>
+						<div class="concept_list presetexam">Exam 9</div>
+						<div class="concept_list presetexam">Exam 10</div>
+                </div> -->
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Motion</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+
+                <div class="accordion_body">
+                    <div class="concept_list">Newtons Laws</div>
+		      		<div class="concept_list">Circular Motion</div>
+		      		<div class="concept_list">Banked Corners</div>
+						<div class="concept_list">Projectile Motion</div>
+						<div class="concept_list">Momentum</div>
+						<div class="concept_list">Energy</div>
+						<div class="concept_list">Springs</div>
+                </div>
+                
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Fields</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                <div class="accordion_body">
+						<div class="concept_list">Gravitational Fields</div>
+						<div class="concept_list">Magnetic Fields</div>
+						<div class="concept_list">Electric Fields</div>
+						<div class="concept_list">Electromagnetism</div>
+						<div class="concept_list">Motors</div>
+             
+                </div>
+
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Generation</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                <div class="accordion_body">
+						<div class="concept_list">Faradays Law</div>
+						<div class="concept_list">Lenzs Law</div>
+						<div class="concept_list">Generators</div>
+						<div class="concept_list">Photovoltaic</div>
+						<div class="concept_list">Transformers</div>
+						<div class="concept_list">Transmission</div>
+			    </div>
+                
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Waves and Light</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                <div class="accordion_body">
+						<div class="concept_list">Wave Properties</div>
+						<div class="concept_list">Diffraction</div>
+						<div class="concept_list">Double Slit</div>
+			    </div>
+                
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Light & Matter</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                
+                <div class="accordion_body">
+						<div class="concept_list">Photoelectric Effect</div>
+						<div class="concept_list">Matter Waves</div>
+						<div class="concept_list">Atomic Structure</div>
+						<div class="concept_list">Light Production</div>
+			    </div>
+                
+				<div class="accordion-header-wrap">
+                    <div class="accordion_header">Einstein</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                <div class="accordion_body">
+						<div class="concept_list">Relativity</div>
+			    </div>
+
+                <div class="accordion-header-wrap">
+                    <div class="accordion_header">Practical Investigation</div>
+                    <div class="accordion-expand-icon">+</div>
+                </div>
+                <div class="accordion_body">
+						<div class="concept_list">Practical Investigation</div>
+			    </div>
+            </div>
+    </div>
+    <div class="builder_sidebar2 list">
+        
+    </div>
+    <div class="builder_sidebar3 list">
+        
+    </div>
+    
+    <div class="builder_sidebar4">
+        
+    </div>
+</div>
+</body>
+</html>
